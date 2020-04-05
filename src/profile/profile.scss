@@ -1,0 +1,59 @@
+$text-color: #134074;
+
+.polls-nav {
+    background-color: #eeeeee;
+    height: 65px;
+}
+
+.user-profile-left {
+    background-color: $text-color;
+    color: white;
+}
+
+.profile-header {
+    font-size: 50px;
+    padding-top: 20px;
+    padding-left: 10px;
+}
+
+
+.update-profile-btn {
+    background-color: #782a33;
+    color: white;
+}
+
+.user-data-link {
+    font-size: 20px;
+}
+
+
+
+.whole-page {
+    height: 100vh;
+}
+
+.middle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.primary {
+    background-color: $text-color;
+    color: white;
+}
+
+.secondary {
+    background-color: white;
+    color: $text-color;
+}
+
+button {
+    border: none;
+    border-radius: 5px;
+}
+
+.shadowed {
+    box-shadow: 3px 4px 5px rgba(0, 0, 0, 0.3);
+}
