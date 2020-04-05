@@ -1,4 +1,28 @@
 $text-color: #134074;
+$text-color-2: #2d5f97;
+$text-color-3: #052242;
+
+.nav-link {
+    color: $text-color-2;
+    font-size: 18px;
+}
+
+.navbar-brand {
+    color: white;
+    font-size: 25px;
+}
+
+.line-break {
+    border: 1px solid $text-color-3;
+}
+
+.user-profile-right {
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    margin-top: 45px;
+    margin-bottom: 45px;
+}
 
 .profile-whitespace {
     margin-top: 15px;
@@ -43,16 +67,14 @@ $text-color: #134074;
 }
 
 .user-header {
-    font-size: 60px;
     height: 250px;
     display: flex;
     align-items: center;
-    margin-left: 20px;
 }
 
 .username {
-    float: left;
-    width: 50%;
+    font-size: 60px;
+    margin-left: 50px;
 }
 
 .profile-pic {
@@ -64,8 +86,12 @@ $text-color: #134074;
 }
 
 .polls-nav {
-    background-color: #eeeeee;
+    background-color: $text-color-3;
     padding-left: 20px;
+    color: white;
+    height: 65px;
+    display: flex;
+    align-items: center;
 }
 
 .user-profile-left {
@@ -83,34 +109,15 @@ $text-color: #134074;
 .update-profile-btn {
     background-color: #782a33;
     color: white;
-    margin-top: 30px;
+    margin-top: 45px;
 }
 
 .user-data-link {
     font-size: 20px;
 }
 
-
-
 .whole-page {
     height: 100vh;
-}
-
-.middle {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.primary {
-    background-color: $text-color;
-    color: white;
-}
-
-.secondary {
-    background-color: white;
-    color: $text-color;
 }
 
 button {
