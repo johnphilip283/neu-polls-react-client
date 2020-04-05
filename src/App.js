@@ -20,6 +20,11 @@ const App = () =>
            render={() => <ProfileScreenComponent/>}>
     </Route>
     <Route exact
+           path='/profile/:userId'
+           render={(props) => <ProfileScreenComponent
+                                  userId={props.match.params.userId}/>}>
+    </Route>
+    <Route exact
            path='/test'
            render={() => <div></div>}>
     </Route>
