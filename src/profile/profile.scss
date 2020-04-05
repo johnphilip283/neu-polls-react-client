@@ -1,8 +1,42 @@
 $text-color: #134074;
 
+.profile-whitespace {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.avatar {
+    width: 250px;
+    height: 250px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.user-header {
+    font-size: 60px;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.username {
+    float: left;
+    width: 50%;
+}
+
+.profile-pic {
+    display: inline;
+    margin: 0 auto;
+    margin-left: -25%;
+    height: 100%;
+    width: auto;
+}
+
 .polls-nav {
     background-color: #eeeeee;
-    height: 65px;
+    padding-left: 20px;
 }
 
 .user-profile-left {
@@ -20,6 +54,7 @@ $text-color: #134074;
 .update-profile-btn {
     background-color: #782a33;
     color: white;
+    margin-top: 30px;
 }
 
 .user-data-link {

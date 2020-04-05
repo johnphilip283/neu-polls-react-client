@@ -3,6 +3,7 @@ import './App.scss';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 import LoginScreenComponent from './login/LoginScreenComponent';
 import HomeScreenComponent from './home/HomeScreenComponent';
+import ProfileScreenComponent from './profile/ProfileScreenComponent'
 
 const App = () => 
   <Router>
@@ -13,6 +14,10 @@ const App = () =>
     <Route exact
            path='/login'
            render={LoginScreenComponent}>
+    </Route>
+    <Route exact
+           path='/profile'
+           render={() => <ProfileScreenComponent/>}>
     </Route>
     <Route exact
            path='/test'
