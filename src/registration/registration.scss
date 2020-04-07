@@ -1,0 +1,36 @@
+$text-color: #134074;
+
+.login-left {
+    background-color: $text-color;
+    font-size: 72px;
+}
+
+.whole-page {
+    height: 100vh;
+}
+
+.middle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.primary {
+    background-color: $text-color;
+    color: white;
+}
+
+.secondary {
+    background-color: white;
+    color: $text-color;
+}
+
+button {
+    border: none;
+    border-radius: 5px;
+}
+
+.shadowed {
+    box-shadow: 3px 4px 5px rgba(0, 0, 0, 0.3);
+}

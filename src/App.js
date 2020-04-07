@@ -4,12 +4,17 @@ import { Route, BrowserRouter as Router } from 'react-router-dom';
 import LoginScreenComponent from './login/LoginScreenComponent';
 import HomeScreenComponent from './home/HomeScreenComponent';
 import ProfileScreenComponent from './profile/ProfileScreenComponent'
+import RegistrationScreenComponent from './registration/RegistrationScreenComponent'
 
 const App = () => 
   <Router>
     <Route exact
            path='/'
-           render={HomeScreenComponent}>
+           render={() => <HomeScreenComponent/>}>
+    </Route>
+    <Route exact
+           path='/registration'
+           render={() => <RegistrationScreenComponent/>}>
     </Route>
     <Route exact
            path='/login'

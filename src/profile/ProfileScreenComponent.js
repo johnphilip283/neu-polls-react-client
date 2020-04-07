@@ -52,7 +52,7 @@ class ProfileScreenComponent extends React.Component {
             <div className='container-fluid'>
 
                 <div className='row whole-page'>
-                    <div className='col-3 user-profile-left'>
+                    <div className='col-sm-3 user-profile-left'>
                         <h2 className='profile-header'>User Profile</h2>
 
                         <hr class='line-break'></hr>
@@ -63,7 +63,7 @@ class ProfileScreenComponent extends React.Component {
                         </ul>
                     </div>
 
-                    <div className='col-9'>
+                    <div className='col-sm-9'>
                         <form>
                             <div class='row d-flex justify-content-center user-profile-right'>
 

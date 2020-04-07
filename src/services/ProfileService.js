@@ -4,12 +4,8 @@
 
 import {API_USER_URL} from "../constants";
 
-/**
- * Creates a new user and adds it to the collection of users.
- * 
- * @param {*} user user object to be added to server
- */
-export const createUser = (user) =>
+// Registration (creating user)
+export const registerUser = (user) =>
 {
     return fetch(API_USER_URL, {
         method: 'POST',
