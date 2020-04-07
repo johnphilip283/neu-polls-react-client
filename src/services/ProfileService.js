@@ -17,6 +17,19 @@ export const registerUser = (user) =>
         .then(response => response.json())
 }
 
+// API call for profile of logged-in user
+export const findUserProfile = (jwt) =>
+{
+    // TODO: need endpoint from Jacob
+    return fetch('', {
+        method: 'GET',
+        headers: {
+            'content-type': 'application/json',
+            'authorization': `bearer ${jwt}`
+        }
+    })
+}
+
 /**
 * Retrieves all user instances as an array of users.
 */
