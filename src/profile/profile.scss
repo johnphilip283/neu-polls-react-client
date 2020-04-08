@@ -1,0 +1,130 @@
+$text-color: #134074;
+$text-color-2: #2d5f97;
+$text-color-3: #052242;
+
+.nav-link {
+    color: $text-color-2;
+    font-size: 18px;
+}
+
+.navbar-brand {
+    color: white;
+    font-size: 25px;
+}
+
+.line-break {
+    border: 1px solid $text-color-3;
+}
+
+.user-profile-right {
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    margin-top: 45px;
+    margin-bottom: 45px;
+}
+
+.profile-whitespace {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.avatar {
+    width: 250px;
+    height: 250px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.avatar:hover .overlay {
+    opacity: 1;
+}
+
+.edit-avatar {
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: rgb(87, 87, 87);
+}
+
+.user-header {
+    height: 250px;
+    display: flex;
+    align-items: center;
+}
+
+.username {
+    font-size: 60px;
+    margin-left: 50px;
+}
+
+.profile-pic {
+    display: inline;
+    margin: 0 auto;
+    margin-left: -25%;
+    height: 100%;
+    width: auto;
+}
+
+.polls-nav {
+    background-color: $text-color-3;
+    padding-left: 20px;
+    color: white;
+    height: 65px;
+    display: flex;
+    align-items: center;
+}
+
+.user-profile-left {
+    background-color: $text-color;
+    color: white;
+}
+
+.profile-header {
+    font-size: 50px;
+    padding-top: 20px;
+    padding-left: 10px;
+}
+
+
+.update-profile-btn {
+    background-color: #782a33;
+    color: white;
+    margin-top: 45px;
+}
+
+.user-data-link {
+    font-size: 20px;
+}
+
+.whole-page {
+    height: 100vh;
+}
+
+button {
+    border: none;
+    border-radius: 5px;
+}
+
+.shadowed {
+    box-shadow: 3px 4px 5px rgba(0, 0, 0, 0.3);
+}
