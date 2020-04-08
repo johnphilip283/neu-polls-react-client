@@ -2,40 +2,26 @@
  * Handles user profile data access to the server.
  */
 
-import {API_USER_URL} from "../constants";
-
-// Registration (creating user)
-export const registerUser = (user) =>
-{
-    return fetch(API_USER_URL, {
-        method: 'POST',
-        body: JSON.stringify(user),
-        headers: {
-            'content-type': 'application/json'
-        }
-    })
-        .then(response => response.json())
-}
+import { API_USER_URL } from "../constants";
 
 // API call for profile of logged-in user
-export const findUserProfile = (jwt) =>
-{
+export const findUserProfile = async jwt => {
     // TODO: need endpoint from Jacob
-    return fetch('', {
+    return await fetch('', {
         method: 'GET',
         headers: {
-            'content-type': 'application/json',
-            'authorization': `bearer ${jwt}`
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${jwt}`
         }
-    })
+    }).then(response => response.json());
 }
 
 /**
 * Retrieves all user instances as an array of users.
 */
 export const findAllUsers = async () => {
-    const response = await fetch(API_USER_URL)
-    return await response.json()
+    const response = await fetch(API_USER_URL);
+    return await response.json();
 }
 
 /**
@@ -43,17 +29,15 @@ export const findAllUsers = async () => {
 * 
 * @param {*} userId userid corresponding to desired user object
 */
-export const findUserById = async (jwt, userId) =>
-{
+export const findUserById = async (jwt, userId) => {
     // TODO: need endpoint from Jacob
-    const response = await fetch(`${API_USER_URL}/${userId}`, {
+    return await fetch(`${API_USER_URL}/${userId}`, {
         method: 'GET',
         headers: {
-            'content-type': 'application/json',
-            'authorization': `bearer ${jwt}`
+            'Content-type': 'application/json',
+            'Authorization': `Bearer ${jwt}`
         }
-    })
-    return await response.json()
+    }).then(response => response.json());
 }
 
 /**
@@ -63,14 +47,12 @@ export const findUserById = async (jwt, userId) =>
 * @param {*} userId userid corresponding to desired user object
 * @param {*} user desired userobject to update
 */
-export const updateUser = async (userId, user) =>
-{
+export const updateUser = async (userId, user) => {
     return await fetch(`${API_USER_URL}/${userId}`, {
         method: 'PUT',
         body: JSON.stringify(user),
         headers: {
-            'content-type': 'application/json'
+            'Content-Type': 'application/json'
         }
-    })
-        .then(response => response.json())
+    }).then(response => response.json());
 }
