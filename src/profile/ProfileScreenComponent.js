@@ -1,6 +1,6 @@
 import React from 'react';
 import './profile.scss';
-import {findUserById, updateUser, findUserProfile} from "../services/ProfileService";
+import {findUserById, updateUser, findUserProfile} from '../services/ProfileService';
 
 class ProfileScreenComponent extends React.Component {
 
@@ -29,7 +29,7 @@ class ProfileScreenComponent extends React.Component {
     }
 
     componentDidMount = async () => {
-
+        
         // TODO: save jwt in props / localStorage / cookies
         const jwt = 'uwu_fix_this_later'
         
