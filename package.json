@@ -1,5 +1,5 @@
 {
-  "name": "neu-polls",
+  "name": "neu-polls-react-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
