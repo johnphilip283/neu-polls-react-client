@@ -4,12 +4,8 @@
 
 import {API_USER_URL} from "../constants";
 
-/**
- * Creates a new user and adds it to the collection of users.
- * 
- * @param {*} user user object to be added to server
- */
-export const createUser = (user) =>
+// Registration (creating user)
+export const registerUser = (user) =>
 {
     return fetch(API_USER_URL, {
         method: 'POST',
@@ -19,6 +15,19 @@ export const createUser = (user) =>
         }
     })
         .then(response => response.json())
+}
+
+// API call for profile of logged-in user
+export const findUserProfile = (jwt) =>
+{
+    // TODO: need endpoint from Jacob
+    return fetch('', {
+        method: 'GET',
+        headers: {
+            'content-type': 'application/json',
+            'authorization': `bearer ${jwt}`
+        }
+    })
 }
 
 /**
@@ -34,9 +43,16 @@ export const findAllUsers = async () => {
 * 
 * @param {*} userId userid corresponding to desired user object
 */
-export const findUserById = async (userId) =>
+export const findUserById = async (jwt, userId) =>
 {
-    const response = await fetch(`${API_USER_URL}/${userId}`)
+    // TODO: need endpoint from Jacob
+    const response = await fetch(`${API_USER_URL}/${userId}`, {
+        method: 'GET',
+        headers: {
+            'content-type': 'application/json',
+            'authorization': `bearer ${jwt}`
+        }
+    })
     return await response.json()
 }
 

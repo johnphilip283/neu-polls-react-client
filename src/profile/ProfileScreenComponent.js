@@ -1,18 +1,19 @@
 import React from 'react';
 import './profile.scss';
-import {findUserById, updateUser} from "../services/ProfileService";
+import {findUserById, updateUser, findUserProfile} from "../services/ProfileService";
 
 class ProfileScreenComponent extends React.Component {
 
     state = {
+        sameUser: false,
+
         userFirstName: '',
         userLastName: '',
-        userAge: '',
+        userDob: '',
+        userUsername: '',
 
-        // HARDCODE - need to fix in user model
+        // HARDCODE for now - add image in user model?
         imgUrl: 'https://cdn.hswstatic.com/gif/hamster-alone.jpg',
-        userEmail: 'kristi.bui27@gmail.com',
-        userPassword: 'hamster_peace_sign_123.jpg',
 
         user: {}
     }
@@ -28,13 +29,40 @@ class ProfileScreenComponent extends React.Component {
     }
 
     componentDidMount = async () => {
-        const user = await findUserById(this.props.userId)
-        this.setState({
-            user: user,
-            userFirstName: user.firstName,
-            userLastName: user.lastName,
-            userAge: user.age,
-        })
+
+        // TODO: save jwt in props / localStorage / cookies
+        const jwt = 'uwu_fix_this_later'
+        
+        // Looking at someone else's profile: URL w/ the user id
+        if (this.props.userId) {
+            console.log("made it here 1!")
+            const user = await findUserById(jwt, this.props.userId)
+
+            // check if you're looking at your own profile
+            // (so you can have editing privileges)
+            const user_check = await findUserProfile(jwt)
+            if (user_check === user) {
+                this.setState({
+                    sameUser: true
+                })
+            }
+
+            this.setState({
+                user: user
+            })
+        }
+
+        // Looking at your profile:
+        else {
+            // TODO: send the JWT in here
+            const user = await findUserProfile(jwt)
+            this.setState({
+                user: user,
+                sameUser: true
+            })
+        }
+
+
     }
 
     render() {
@@ -55,7 +83,7 @@ class ProfileScreenComponent extends React.Component {
                     <div className='col-3 user-profile-left'>
                         <h2 className='profile-header'>User Profile</h2>
 
-                        <hr class='line-break'></hr>
+                        <hr className='line-break'></hr>
 
                         <ul>
                             <li className='user-data-link'><a href='/'>Your Polls</a></li>
@@ -65,7 +93,7 @@ class ProfileScreenComponent extends React.Component {
 
                     <div className='col-9'>
                         <form>
-                            <div class='row d-flex justify-content-center user-profile-right'>
+                            <div className='row d-flex justify-content-center user-profile-right'>
 
                                 <div className='avatar profile-whitespace'>
                                     <img className='profile-pic' 
@@ -85,18 +113,28 @@ class ProfileScreenComponent extends React.Component {
 
                             </div>
 
-                            <div class='row d-flex justify-content-center'>
-                                <div className='col-sm-5 profile-whitespace'>
-                                    <label htmlFor="email">Email Address</label>
-                                    <input className="form-control" id="email" 
+                            <div className='row d-flex justify-content-center'>
+                                    {this.state.sameUser 
+                                    ?
+                                    <div className='col-sm-5 profile-whitespace'>
+                                        <label htmlFor="username">Username</label>
+                                        <input className="form-control" id="username" 
                                             onChange={(e) => {
                                                 this.setState({
-                                                    userEmail: e.target.value
+                                                    userUsername: e.target.value
                                                 })
                                             }}
-                                            placeholder={this.state.userEmail} />
-                                </div>
+                                            placeholder={this.state.user.username} />
+                                    </div>
+                                    :
+                                    <div className='col-sm-10 profile-whitespace'>
+                                        <label htmlFor="username">Username</label>
+                                        <input disabled className="form-control" id="username"
+                                                placeholder={this.state.user.username} />
+                                    </div>
+                                    }
 
+                                {this.state.sameUser &&
                                 <div className='col-sm-5 profile-whitespace'>
                                     <label htmlFor="password">Password</label>
                                     <input className="form-control" id="password"
@@ -105,13 +143,31 @@ class ProfileScreenComponent extends React.Component {
                                                     userPassword: e.target.value
                                                 })
                                             }}
-                                            placeholder={this.state.userPassword} />
+                                            placeholder={this.state.user.password} />
                                 </div>
+                                }
                             </div>
 
-                            <div class='row d-flex justify-content-center'>
+                            {this.state.sameUser &&
+                            <div className = 'row d-flex justify-content-center'>
+                                <div className='col-sm-10 profile-whitespace'>
+                                    <label htmlFor="email">Email Address</label>
+                                    <input className="form-control" id="email" 
+                                            onChange={(e) => {
+                                                this.setState({
+                                                    userEmail: e.target.value
+                                                })
+                                            }}
+                                            placeholder={this.state.user.email} />
+                                </div>
+                            </div>
+                            }
+
+                            <div className='row d-flex justify-content-center'>
                                 <div className='col-sm-5 profile-whitespace'>
                                     <label htmlFor="first_name">First Name</label>
+
+                                    {this.state.sameUser ?
                                     <input className="form-control" id="first_name" 
                                             onChange={(e) => {
                                                 this.setState({
@@ -119,10 +175,16 @@ class ProfileScreenComponent extends React.Component {
                                                 })
                                             }}
                                             placeholder={this.state.user.firstName} />
+                                    :
+                                    <input disabled className="form-control" id="first_name"
+                                           placeholder={this.state.user.firstName} />
+                                    }
                                 </div>
 
                                 <div className='col-sm-5 profile-whitespace'>
                                     <label htmlFor="last_name">Last Name</label>
+
+                                    {this.state.sameUser ? 
                                     <input className="form-control" id="last_name"
                                             onChange={(e) => {
                                                 this.setState({
@@ -130,37 +192,56 @@ class ProfileScreenComponent extends React.Component {
                                                 })
                                             }}
                                             placeholder={this.state.user.lastName} />
+                                    :
+                                    <input disabled className="form-control" id="last_name"
+                                           placeholder={this.state.user.lastName} />
+                                    }
                                 </div>
                             </div>
 
-                            <div class='row d-flex justify-content-center'>
+                            <div className='row d-flex justify-content-center'>
                                 <div className='col-sm-5 profile-whitespace'>
-                                    <label htmlFor="age">Age</label>
-                                    <input className="form-control" id="age" 
+                                    <label htmlFor="dob">Date of Birth</label>
+                                    {this.state.sameUser ?
+                                    <input className="form-control" id="dob" 
                                             onChange={(e) => {
                                                 this.setState({
-                                                    userAge: e.target.value
+                                                    userDob: e.target.value
                                                 })
                                             }}
-                                            placeholder={this.state.user.age} />
+                                            placeholder={this.state.user.dob} />
+                                    :
+                                    <input disabled className="form-control" id="dob"
+                                           placeholder={this.state.user.dob} />
+                                    }
                                 </div>
 
                                 <div className='col-sm-5 profile-whitespace'>
-                                    <label htmlFor="phone_number">Role</label>
-                                    <input className="form-control" id="phone_number" placeholder="Admin" /> 
+                                    <label htmlFor="role">Role</label>
+                                    {this.state.sameUser ? 
+                                    <input className="form-control" id="role" placeholder="Admin" /> 
+                                    :
+                                    <input disabled className="form-control" id="role" placeholder="Admin" />
+                                    }
                                 </div>
                             </div>
 
-                            <div class='d-flex justify-content-center'>
+                            {this.state.sameUser && 
+
+                            <div className='d-flex justify-content-center'>
                             <button type='button'
                                     className='update-profile-btn shadowed p-2' 
                                     onClick={() => {
                                             const updatedUser = {...this.state.user, 
-                                                                    'age': this.state.userAge,
+                                                                    'username': this.state.userUsername,
+                                                                    'password': this.state.userPassword,
+                                                                    'dob': this.state.userAge,
                                                                     'firstName': this.state.userFirstName,
                                                                     'lastName': this.state.userLastName};
                                             this.updateUser(updatedUser)}}>Save Changes</button>
                             </div>
+                            
+                            }
                         </form>
                     </div>
                 </div> 
