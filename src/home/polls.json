@@ -1,29 +1,31 @@
-[{
-    "text": "what is the better cereal",
+[
+    {
+    "text": "What is the better cereal?",
     "multipleVoting": false,
     "addingOptionsEnabled": true,
-    "originalOptions": ["cocoa krispies", "frosted flakes"],
+    "options": ["cocoa krispies", "frosted flakes"],
     "totalVoted": 12,
     "finalResults": [{"cocoa krispies": {"added_by": "John Philip", "voters": ["Jacob Aronoff", "Kristi Bui"]}},
                      {"frosted flakes": {"added_by": "Kristi Bui", "voters": ["Jacob Aronoff"]}}] 
-},
-{
-    "text": "best programming language",
-    "multipleVoting": false,
-    "addingOptionsEnabled": true,
-    "originalOptions": ["javascript", "java", "brainfuck"],
-    "totalVoted": 12,
-    "finalResults": [{ "javascript": { "added_by": "John Philip", "voters": ["Jacob Aronoff", "Kristi Bui"]}},
-                     { "java": { "added_by": "John Philip", "voters": []}},
-                     { "brainfuck": { "added_by": "John Philip", "voters": []}}] 
-},
-{
-    "text": "best programming language",
-    "multipleVoting": false,
-    "addingOptionsEnabled": true,
-    "originalOptions": ["javascript", "java", "brainfuck"],
-    "totalVoted": 12,
-    "finalResults": [{ "javascript": { "added_by": "John Philip", "voters": ["Jacob Aronoff", "Kristi Bui"]}},
-                     { "java": { "added_by": "John Philip", "voters": []}},
-                     { "brainfuck": { "added_by": "John Philip", "voters": []}}] 
-}]
+    },
+    {
+        "text": "Best programming language?",
+        "multipleVoting": false,
+        "addingOptionsEnabled": true,
+        "options": ["javascript", "java", "brainfuck"],
+        "totalVoted": 12,
+        "finalResults": [{ "javascript": { "added_by": "John Philip", "voters": ["Jacob Aronoff", "Kristi Bui"]}},
+                        { "java": { "added_by": "John Philip", "voters": []}},
+                        { "brainfuck": { "added_by": "John Philip", "voters": []}}] 
+    },
+    {
+        "text": "Best programming language?",
+        "multipleVoting": false,
+        "addingOptionsEnabled": true,
+        "options": ["javascript", "java", "brainfuck"],
+        "totalVoted": 12,
+        "finalResults": [{ "javascript": { "added_by": "John Philip", "voters": ["Jacob Aronoff", "Kristi Bui"]}},
+                        { "java": { "added_by": "John Philip", "voters": []}},
+                        { "brainfuck": { "added_by": "John Philip", "voters": []}}] 
+    }
+]

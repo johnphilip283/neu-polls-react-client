@@ -12,9 +12,10 @@ const LoginScreenComponent = ({ signUpHandler }) => {
     const passwordHandler = evt => setPassword(evt.target.value);  
     
     const logIn = () => {
+        console.log("hello");
         loginUser(username, password).then(res => {
-            if (res && res.token) {
-                window.localStorage.setItem('token', res.token);
+            if (res && res.jwt) {
+                window.localStorage.setItem('token', res.jwt);
                 window.location.replace("/");
             }
         });

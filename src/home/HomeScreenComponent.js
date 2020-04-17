@@ -1,21 +1,24 @@
 import React from 'react';
 import polls from './polls';
 import HeadingComponent from '../header/HeadingComponent';
+import PollComponent from '../poll/PollComponent';
+import './homescreen.scss';
 
 const HomeScreenComponent = ({ }) => {
-   console.log("2");
+
+   if (!window.localStorage.getItem('token')) {
+      window.location.replace("/login");
+      return;
+   }
+
    return (
-       <div className='container-fluid'>
-           <div className='col-3 d-inline bg-primary'>
-            hi
-           </div>
-           <div className='col-3 d-inline'>
-            i'm
-           </div>
-           <div className='col-3 d-inline'>
-            john
-           </div>
-        </div>
+      <div class="container-home">
+         <HeadingComponent/>
+         <div className='feed container-fluid'>
+            {polls.map(poll => <PollComponent poll={poll}/>)}
+         </div>
+      </div>
+       
    )
 };
 

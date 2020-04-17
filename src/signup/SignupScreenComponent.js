@@ -13,8 +13,8 @@ const SignupScreenComponent = () => {
     const signUp = () => {
         if (confirmation === user.password) {
              registerUser(user).then(res => {
-                if (res && res.token) {
-                    window.localStorage.setItem('token', res.token);
+                if (res && res.jwt) {
+                    window.localStorage.setItem('token', res.jwt);
                     window.location.replace("/");
                 }
             })

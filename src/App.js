@@ -6,7 +6,6 @@ import HomeScreenComponent from './home/HomeScreenComponent';
 import ProfileScreenComponent from './profile/ProfileScreenComponent';
 
 const App = () => {
-  console.log("1");
   return (
     <Router>
       <Route exact path="/" component={HomeScreenComponent}></Route>

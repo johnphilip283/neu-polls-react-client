@@ -1,0 +1,11 @@
+.feed {
+    display: grid;
+    grid-template-columns: 300px 300px 300px;
+    grid-template-rows: 300px 300px 300px; 
+    column-gap: 20px;
+    row-gap: 30px;
+}
+
+.container-home {
+    background: #CBF7ED;
+}
