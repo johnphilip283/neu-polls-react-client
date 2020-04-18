@@ -2,12 +2,12 @@
  * Handles user profile data access to the server.
  */
 
-import { API_USER_URL } from "../constants";
+import { API_USER_URL, PROFILE_URL } from "../constants";
 
 // API call for profile of logged-in user
 export const findUserProfile = async jwt => {
-    // TODO: need endpoint from Jacob
-    return await fetch('', {
+
+    return await fetch(PROFILE_URL, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -47,12 +47,13 @@ export const findUserById = async (jwt, userId) => {
 * @param {*} userId userid corresponding to desired user object
 * @param {*} user desired userobject to update
 */
-export const updateUser = async (userId, user) => {
+export const updateUser = async (userId, user, jwt) => {
     return await fetch(`${API_USER_URL}/${userId}`, {
         method: 'PUT',
         body: JSON.stringify(user),
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${jwt}`
         }
     }).then(response => response.json());
 }
