@@ -3,12 +3,12 @@
  */
 import { ALL_USERS_URL, USER_DATA_URL } from "../constants";
 
-const jwt = window.localStorage.getItem('token') || '';
+import { API_USER_URL, PROFILE_URL } from "../constants";
 
 // API call for profile of logged-in user
-export const findUserProfile = async () => {
-    // TODO: need endpoint from Jacob
-    return await fetch('', {
+export const findUserProfile = async jwt => {
+
+    return await fetch(PROFILE_URL, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -48,12 +48,13 @@ export const findUserById = async userId => {
 * @param {*} userId userid corresponding to desired user object
 * @param {*} user desired userobject to update
 */
-export const updateUser = async (userId, user) => {
-    return await fetch(`${USER_DATA_URL(userId)}`, {
+export const updateUser = async (userId, user, jwt) => {
+    return await fetch(`${API_USER_URL}/${userId}`, {
         method: 'PUT',
         body: JSON.stringify(user),
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${jwt}`
         }
     }).then(response => response.json());
 }

@@ -18,51 +18,58 @@ class ProfileScreenComponent extends React.Component {
         user: {}
     }
 
-    /**
-     * Update user information.
-     */
-    updateUser = (user) => {
-        updateUser(user.id, user)
+    // Update user information.
+    updateUser = () => {
+
+        const updatedUser = {...this.state.user, 
+            'username': this.state.userUsername,
+            'password': this.state.userPassword,
+            'dob': this.state.userAge,
+            'firstName': this.state.userFirstName,
+            'lastName': this.state.userLastName};
+
+        updateUser(updatedUser.id, updatedUser, window.localStorage.getItem('token'))
             .then(updatedUser => this.setState({
-                user: user
+                user: updatedUser
             }))
     }
 
     componentDidMount = async () => {
         
-        // TODO: save jwt in props / localStorage / cookies
-        const jwt = 'uwu_fix_this_later'
-        
-        // Looking at someone else's profile: URL w/ the user id
-        if (this.props.userId) {
-            console.log("made it here 1!")
-            const user = await findUserById(jwt, this.props.userId)
+        if (!window.localStorage.getItem('token')) {
+            window.location.replace("/login");
+            return;
+        }
 
-            // check if you're looking at your own profile
-            // (so you can have editing privileges)
-            const user_check = await findUserProfile(jwt)
-            if (user_check === user) {
+        const jwt = window.localStorage.getItem('token');
+
+        if (this.props.userId) {
+            console.log('poop');
+            const userProfile = await findUserById(jwt, this.props.userId);
+            const currBrowsingUser = await findUserProfile(jwt);
+
+            if (userProfile.id === currBrowsingUser.id) {
                 this.setState({
                     sameUser: true
-                })
+                });
             }
 
             this.setState({
-                user: user
+                user: userProfile
             })
         }
 
-        // Looking at your profile:
+        // Looking at your own profile
         else {
-            // TODO: send the JWT in here
-            const user = await findUserProfile(jwt)
-            this.setState({
-                user: user,
-                sameUser: true
-            })
+
+            findUserProfile(jwt)
+                .then(userProfile => {
+                    
+                    this.setState({
+                    user: userProfile,
+                    sameUser: true
+                })})
         }
-
-
     }
 
     render() {
@@ -219,7 +226,7 @@ class ProfileScreenComponent extends React.Component {
                                 <div className='col-sm-5 profile-whitespace'>
                                     <label htmlFor="role">Role</label>
                                     {this.state.sameUser ? 
-                                    <input className="form-control" id="role" placeholder="Admin" /> 
+                                    <input className="form-control" id="role" placeholder={this.state.user.role} /> 
                                     :
                                     <input disabled className="form-control" id="role" placeholder="Admin" />
                                     }
@@ -231,14 +238,7 @@ class ProfileScreenComponent extends React.Component {
                             <div className='d-flex justify-content-center'>
                             <button type='button'
                                     className='update-profile-btn shadowed p-2' 
-                                    onClick={() => {
-                                            const updatedUser = {...this.state.user, 
-                                                                    'username': this.state.userUsername,
-                                                                    'password': this.state.userPassword,
-                                                                    'dob': this.state.userAge,
-                                                                    'firstName': this.state.userFirstName,
-                                                                    'lastName': this.state.userLastName};
-                                            this.updateUser(updatedUser)}}>Save Changes</button>
+                                    onClick={() => this.updateUser()}>Save Changes</button>
                             </div>
                             
                             }
