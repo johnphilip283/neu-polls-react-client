@@ -1,6 +1,7 @@
-$text-color: #134074;
-$text-color-2: #2d5f97;
+$text-color: #6FA396;
+$text-color-2: #CBF7ED;
 $text-color-3: #052242;
+
 
 .nav-link {
     color: $text-color-2;
@@ -37,22 +38,6 @@ $text-color-3: #052242;
     border-radius: 50%;
 }
 
-.avatar:hover .overlay {
-    opacity: 1;
-}
-
-.edit-avatar {
-    color: white;
-    font-size: 20px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    text-align: center;
-}
-
 .overlay {
     position: absolute;
     top: 0;
@@ -78,11 +63,7 @@ $text-color-3: #052242;
 }
 
 .profile-pic {
-    display: inline;
-    margin: 0 auto;
-    margin-left: -25%;
     height: 100%;
-    width: auto;
 }
 
 .polls-nav {
@@ -107,13 +88,17 @@ $text-color-3: #052242;
 
 
 .update-profile-btn {
-    background-color: #782a33;
+    background-color: $text-color-3;
     color: white;
     margin-top: 45px;
 }
 
 .user-data-link {
     font-size: 20px;
+}
+
+.profile-link {
+    color: $text-color-2;
 }
 
 .whole-page {
@@ -127,4 +112,8 @@ button {
 
 .shadowed {
     box-shadow: 3px 4px 5px rgba(0, 0, 0, 0.3);
+}
+
+.navbar {
+    background-color: #CBF7ED;
 }

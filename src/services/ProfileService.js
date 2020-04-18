@@ -30,9 +30,9 @@ export const findAllUsers = async () => {
 * 
 * @param {*} userId userid corresponding to desired user object
 */
-export const findUserById = async userId => {
-    // TODO: need endpoint from Jacob
-    return await fetch(`${USER_DATA_URL(userId)}`, {
+export const findUserById = async (jwt, userId) => {
+
+    return await fetch(`${API_USER_URL}/${userId}`, {
         method: 'GET',
         headers: {
             'Content-type': 'application/json',

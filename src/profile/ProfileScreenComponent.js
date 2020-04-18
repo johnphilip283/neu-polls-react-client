@@ -1,6 +1,8 @@
 import React from 'react';
-import './profile.scss';
+import avatar from './avie.png';
+import HeadingComponent from '../header/HeadingComponent';
 import {findUserById, updateUser, findUserProfile} from '../services/ProfileService';
+import './profile.scss';
 
 class ProfileScreenComponent extends React.Component {
 
@@ -11,27 +13,26 @@ class ProfileScreenComponent extends React.Component {
         userLastName: '',
         userDob: '',
         userUsername: '',
-
-        // HARDCODE for now - add image in user model?
-        imgUrl: 'https://cdn.hswstatic.com/gif/hamster-alone.jpg',
-
+        userPassword: '',
         user: {}
     }
 
-    // Update user information.
     updateUser = () => {
 
-        const updatedUser = {...this.state.user, 
-            'username': this.state.userUsername,
-            'password': this.state.userPassword,
-            'dob': this.state.userAge,
+        var user = {'username': this.state.userUsername,
+            'dob': this.state.userDob,
             'firstName': this.state.userFirstName,
             'lastName': this.state.userLastName};
 
-        updateUser(updatedUser.id, updatedUser, window.localStorage.getItem('token'))
-            .then(updatedUser => this.setState({
-                user: updatedUser
-            }))
+        if (this.state.userPassword != '') {
+            user = {...user, 
+            'password': this.state.userPassword};
+        }
+
+        console.log(user);
+
+        updateUser(this.state.user.id, user, window.localStorage.getItem('token'))
+            .then(update => this.componentDidMount())
     }
 
     componentDidMount = async () => {
@@ -42,11 +43,10 @@ class ProfileScreenComponent extends React.Component {
         }
 
         const jwt = window.localStorage.getItem('token');
+        const currBrowsingUser = await findUserProfile(jwt);
 
         if (this.props.userId) {
-            console.log('poop');
             const userProfile = await findUserById(jwt, this.props.userId);
-            const currBrowsingUser = await findUserProfile(jwt);
 
             if (userProfile.id === currBrowsingUser.id) {
                 this.setState({
@@ -55,20 +55,24 @@ class ProfileScreenComponent extends React.Component {
             }
 
             this.setState({
-                user: userProfile
+                user: userProfile,
+                userUsername: userProfile.username,
+                userDob: userProfile.dob.replace(/(\d{4})\-(\d{2})\-(\d{2}).*/, '$2/$3/$1'),
+                userFirstName: userProfile.firstName,
+                userLastName: userProfile.lastName
             })
         }
 
-        // Looking at your own profile
         else {
 
-            findUserProfile(jwt)
-                .then(userProfile => {
-                    
-                    this.setState({
-                    user: userProfile,
-                    sameUser: true
-                })})
+            this.setState({
+                user: currBrowsingUser,
+                sameUser: true,
+                userUsername: currBrowsingUser.username,
+                userDob: currBrowsingUser.dob.replace(/(\d{4})\-(\d{2})\-(\d{2}).*/, '$2/$3/$1'),
+                userFirstName: currBrowsingUser.firstName,
+                userLastName: currBrowsingUser.lastName
+            })
         }
     }
 
@@ -76,26 +80,25 @@ class ProfileScreenComponent extends React.Component {
         return(
 
             <div>
-                <nav className='nav polls-nav'>
-                    <a className="navbar-brand" href="/">NEU Polls</a>
-                    <a className='nav-link' href="/">Home</a>
-                    <a className="nav-link" href="/profile">Profile</a>
-                    <a className="nav-link" href="/profile">Users</a>
-                    <a className="nav-link" href="/">Logout</a>
-                </nav>
+                <HeadingComponent/>
 
             <div className='container-fluid'>
 
                 <div className='row whole-page'>
                     <div className='col-3 user-profile-left'>
-                        <h2 className='profile-header'>User Profile</h2>
+                        <h2 className='profile-header'>{this.state.sameUser ? `Your Profile` : `${this.state.user.firstName}'s Profile`}</h2>
 
                         <hr className='line-break'></hr>
 
                         <ul>
-                            <li className='user-data-link'><a href='/'>Your Polls</a></li>
-                            <li className='user-data-link'><a href='/'>Your Comments</a></li>
+                            <li className='user-data-link'><a className='profile-link' href='/'>
+                                {this.state.sameUser ? `Your Polls` : `${this.state.user.firstName}'s Polls`}
+                            </a></li>
+                            <li className='user-data-link'><a className='profile-link' href='/'>
+                                {this.state.sameUser ? `Your Comments` : `${this.state.user.firstName}'s Comments`}
+                            </a></li>
                         </ul>
+
                     </div>
 
                     <div className='col-9'>
@@ -104,14 +107,8 @@ class ProfileScreenComponent extends React.Component {
 
                                 <div className='avatar profile-whitespace'>
                                     <img className='profile-pic' 
-                                        src={this.state.imgUrl}
+                                        src={avatar}
                                         alt={this.state.user.firstName + "'s avatar"}/>
-
-                                    <div className="overlay">
-                                        <span className='edit-avatar'>
-                                            <a href='/'>Edit Avatar</a>
-                                        </span>
-                                    </div>
                                 </div>
 
                                 <span className='username'>
@@ -208,7 +205,7 @@ class ProfileScreenComponent extends React.Component {
 
                             <div className='row d-flex justify-content-center'>
                                 <div className='col-sm-5 profile-whitespace'>
-                                    <label htmlFor="dob">Date of Birth</label>
+                                    <label htmlFor="dob">Date of Birth (MM/DD/YYYY)</label>
                                     {this.state.sameUser ?
                                     <input className="form-control" id="dob" 
                                             onChange={(e) => {
@@ -216,10 +213,10 @@ class ProfileScreenComponent extends React.Component {
                                                     userDob: e.target.value
                                                 })
                                             }}
-                                            placeholder={this.state.user.dob} />
+                                            placeholder={this.state.userDob} />
                                     :
                                     <input disabled className="form-control" id="dob"
-                                           placeholder={this.state.user.dob} />
+                                           placeholder={this.state.userDob} />
                                     }
                                 </div>
 
@@ -228,7 +225,7 @@ class ProfileScreenComponent extends React.Component {
                                     {this.state.sameUser ? 
                                     <input className="form-control" id="role" placeholder={this.state.user.role} /> 
                                     :
-                                    <input disabled className="form-control" id="role" placeholder="Admin" />
+                                    <input disabled className="form-control" id="role" placeholder={this.state.user.role} />
                                     }
                                 </div>
                             </div>
