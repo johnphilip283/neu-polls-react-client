@@ -1,11 +1,12 @@
 /**
  * Handles user profile data access to the server.
  */
+import { ALL_USERS_URL, USER_DATA_URL } from "../constants";
 
-import { API_USER_URL } from "../constants";
+const jwt = window.localStorage.getItem('token') || '';
 
 // API call for profile of logged-in user
-export const findUserProfile = async jwt => {
+export const findUserProfile = async () => {
     // TODO: need endpoint from Jacob
     return await fetch('', {
         method: 'GET',
@@ -20,7 +21,7 @@ export const findUserProfile = async jwt => {
 * Retrieves all user instances as an array of users.
 */
 export const findAllUsers = async () => {
-    const response = await fetch(API_USER_URL);
+    const response = await fetch(ALL_USERS_URL);
     return await response.json();
 }
 
@@ -29,9 +30,9 @@ export const findAllUsers = async () => {
 * 
 * @param {*} userId userid corresponding to desired user object
 */
-export const findUserById = async (jwt, userId) => {
+export const findUserById = async userId => {
     // TODO: need endpoint from Jacob
-    return await fetch(`${API_USER_URL}/${userId}`, {
+    return await fetch(`${USER_DATA_URL(userId)}`, {
         method: 'GET',
         headers: {
             'Content-type': 'application/json',
@@ -48,7 +49,7 @@ export const findUserById = async (jwt, userId) => {
 * @param {*} user desired userobject to update
 */
 export const updateUser = async (userId, user) => {
-    return await fetch(`${API_USER_URL}/${userId}`, {
+    return await fetch(`${USER_DATA_URL(userId)}`, {
         method: 'PUT',
         body: JSON.stringify(user),
         headers: {
