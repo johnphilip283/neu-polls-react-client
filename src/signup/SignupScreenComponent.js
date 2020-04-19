@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { registerUser } from '../services/AuthService';
+import { registerUser } from '../services/UserService';
+import { withRouter } from 'react-router-dom';
 
-const SignupScreenComponent = () => {
+const SignupScreenComponent = ({ history }) => {
 
+    const [error, setError] = useState('');
     const [user, setUser] = useState({});
     const [confirmation, setConfirmation] = useState('');
 
@@ -11,13 +13,25 @@ const SignupScreenComponent = () => {
     const confirmationHandler = evt => setConfirmation(evt.target.value);
     
     const signUp = () => {
+        console.log(confirmation);
+        console.log(user.password);
+
+
         if (confirmation === user.password) {
              registerUser(user).then(res => {
-                if (res && res.jwt) {
-                    window.localStorage.setItem('token', res.jwt);
-                    window.location.replace("/");
+                 console.log(res);
+                if (res) {
+                    if (res.jwt) {
+                        window.localStorage.setItem('token', res.jwt);
+                        history.push("/");
+                    }
+                    if (res.errors) {
+                        setError('Error signing up, please check credentials!');    
+                    }
                 }
             })
+        } else {
+            setError('Confirmation does not equal password!');
         }
     };
 
@@ -57,9 +71,10 @@ const SignupScreenComponent = () => {
                 <button className='m-2 p-2 primary shadowed' onClick={signUp}>
                     Sign Up
                 </button>
+                { error && <p className='text-danger mx-auto'>{error}</p> }
             </div> 
         </>
     )
 }
 
-export default SignupScreenComponent;
+export default withRouter(SignupScreenComponent);
