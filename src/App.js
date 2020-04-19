@@ -4,6 +4,7 @@ import { Route, BrowserRouter as Router } from 'react-router-dom';
 import LoginContainer from './containers/LoginContainer';
 import HomeScreenComponent from './home/HomeScreenComponent';
 import ProfileScreenComponent from './profile/ProfileScreenComponent';
+import PrivacyComponent from './privacy/PrivacyComponent';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <ProfileScreenComponent userId={props.match.params.userId} />
         )}
       ></Route>
+      <Route exact path="/privacy" component={PrivacyComponent}></Route>
     </Router>
   );
 };
