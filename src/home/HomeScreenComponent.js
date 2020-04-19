@@ -1,25 +1,64 @@
-import React from 'react';
-import polls from './polls';
-import HeadingComponent from '../header/HeadingComponent';
-import PollComponent from '../poll/PollComponent';
-import './homescreen.scss';
+import React, { useState, useEffect } from "react";
+import HeadingComponent from "../header/HeadingComponent";
+import LoggedInHomeScreenComponent from "./LoggedInHomeScreenComponent";
+import AnonHomeScreenComponent from "./AnonHomeScreenComponent";
+import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
 
-const HomeScreenComponent = ({ }) => {
+import "./homescreen.scss";
 
-   if (!window.localStorage.getItem('token')) {
-      window.location.replace("/login");
-      return;
-   }
+const HomeScreenComponent = ({ history }) => {
 
-   return (
-      <div class="container-home">
-         <HeadingComponent/>
-         <div className='feed container-fluid'>
-            {polls.map(poll => <PollComponent poll={poll}/>)}
-         </div>
-      </div>
-       
-   )
+  const jwt = window.localStorage.getItem("token") || "";
+
+  // const data = [
+  //   {
+  //     name: "Page A",
+  //     uv: 4000,
+  //     pv: 2400,
+  //   },
+  //   {
+  //     name: "Page B",
+  //     uv: 3000,
+  //     pv: 1398,
+  //   },
+  //   {
+  //     name: "Page C",
+  //     uv: 2000,
+  //     pv: 9800,
+  //   },
+  //   {
+  //     name: "Page D",
+  //     uv: 2780,
+  //     pv: 3908,
+  //   },
+  //   {
+  //     name: "Page E",
+  //     uv: 1890,
+  //     pv: 4800,
+  //   },
+  //   {
+  //     name: "Page F",
+  //     uv: 2390,
+  //     pv: 3800,
+  //   },
+  //   {
+  //     name: "Page G",
+  //     uv: 3490,
+  //     pv: 4300,
+  //   },
+  // ];
+
+  // return (
+  //   <BarChart width={730} height={250} data={data} layout="horizontal">
+  //     <Bar dataKey="pv" fill="#8884d8" layout="horizontal"/>
+  //   </BarChart>
+  // );
+  return (
+    <div class="container-home">
+      <HeadingComponent/>
+      { jwt ? <LoggedInHomeScreenComponent/> : <AnonHomeScreenComponent/> }
+    </div>
+  );
 };
 
 export default HomeScreenComponent;
