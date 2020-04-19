@@ -1,6 +1,7 @@
 /**
  * Handles user profile data access to the server.
  */
+import { ALL_USERS_URL, USER_DATA_URL } from "../constants";
 
 import { API_USER_URL, PROFILE_URL } from "../constants";
 
@@ -20,7 +21,7 @@ export const findUserProfile = async jwt => {
 * Retrieves all user instances as an array of users.
 */
 export const findAllUsers = async () => {
-    const response = await fetch(API_USER_URL);
+    const response = await fetch(ALL_USERS_URL);
     return await response.json();
 }
 

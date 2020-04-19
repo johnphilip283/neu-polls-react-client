@@ -1,14 +1,17 @@
-import { API_USER_URL } from "../constants";
-import { SIGN_IN_URL } from '../constants';
+import { ALL_USERS_URL, SIGN_IN_URL } from "../constants";
 
 // Registration (creating user)
 export const registerUser = async user => {
+
+    if (!user.dob) {
+        return { errors: 'No date of birth given!'};
+    }
 
     let [year, month, day] = user.dob.split("-");
 
     const copy = {...user, dob: `${month}/${day}/${year}`};
 
-    return await fetch(API_USER_URL, {
+    return await fetch(ALL_USERS_URL, {
         method: 'POST',
         body: JSON.stringify(copy),
         headers: {
@@ -21,7 +24,7 @@ export const registerUser = async user => {
 export const loginUser = async (username, password) => {
     return await fetch(SIGN_IN_URL, {
         method: 'POST',
-        body: JSON.stringify({username, password}),
+        body: JSON.stringify({ username, password }),
          headers: {
             'Content-Type': 'application/json'
         }
