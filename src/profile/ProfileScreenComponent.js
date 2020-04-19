@@ -14,22 +14,32 @@ class ProfileScreenComponent extends React.Component {
         userDob: '',
         userUsername: '',
         userPassword: '',
-        user: {}
+        userRole: '',
+        user: {},
+        currBrowsing: {}
     }
 
     updateUser = () => {
 
-        var user = {'username': this.state.userUsername,
-            'dob': this.state.userDob,
-            'firstName': this.state.userFirstName,
-            'lastName': this.state.userLastName};
+        var user = {};
 
-        if (this.state.userPassword != '') {
-            user = {...user, 
-            'password': this.state.userPassword};
+        if (this.state.sameUser) {
+            user = {'username': this.state.userUsername,
+                    'password': this.state.userPassword,
+                    'dob': this.state.userDob,
+                    'firstName': this.state.userFirstName,
+                    'lastName': this.state.userLastName};
+
+            if (this.state.userPassword != '') {
+                    user = {...user, 
+                        'password': this.state.userPassword};
+            }
         }
 
-        console.log(user);
+        if (this.state.currBrowsing.role === 'admin') {
+            user = {...user,
+                    'role': this.state.userRole}
+        }
 
         updateUser(this.state.user.id, user, window.localStorage.getItem('token'))
             .then(update => this.componentDidMount())
@@ -56,6 +66,7 @@ class ProfileScreenComponent extends React.Component {
 
             this.setState({
                 user: userProfile,
+                currBrowsing: currBrowsingUser,
                 userUsername: userProfile.username,
                 userDob: userProfile.dob.replace(/(\d{4})\-(\d{2})\-(\d{2}).*/, '$2/$3/$1'),
                 userFirstName: userProfile.firstName,
@@ -67,6 +78,7 @@ class ProfileScreenComponent extends React.Component {
 
             this.setState({
                 user: currBrowsingUser,
+                currBrowsing: currBrowsingUser,
                 sameUser: true,
                 userUsername: currBrowsingUser.username,
                 userDob: currBrowsingUser.dob.replace(/(\d{4})\-(\d{2})\-(\d{2}).*/, '$2/$3/$1'),
@@ -222,22 +234,28 @@ class ProfileScreenComponent extends React.Component {
 
                                 <div className='col-sm-5 profile-whitespace'>
                                     <label htmlFor="role">Role</label>
-                                    {this.state.sameUser ? 
-                                    <input className="form-control" id="role" placeholder={this.state.user.role} /> 
+
+
+                                    {this.state.currBrowsing.role === 'admin' ? 
+                                    <select id="role" className="form-control" defaultValue={this.state.user.role}
+                                            onChange={(e) => {this.setState({userRole: e.target.value})}}>
+                                        <option>user</option>
+                                        <option>admin</option>
+                                    </select>
                                     :
                                     <input disabled className="form-control" id="role" placeholder={this.state.user.role} />
                                     }
                                 </div>
                             </div>
 
-                            {this.state.sameUser && 
-
+                            {(this.state.sameUser || this.state.currBrowsing.role === 'admin') && 
                             <div className='d-flex justify-content-center'>
                             <button type='button'
                                     className='update-profile-btn shadowed p-2' 
-                                    onClick={() => this.updateUser()}>Save Changes</button>
+                                    onClick={() => this.updateUser()}>
+                                        {(this.state.currBrowsing.role === 'admin') && (!this.state.sameUser) ? 
+                                                                        "Update Role" : "Save Changes"}</button>
                             </div>
-                            
                             }
                         </form>
                     </div>
