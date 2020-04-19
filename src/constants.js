@@ -16,5 +16,5 @@ export const COMMENTS_FOR_POLL = pid => `${BASE_URL}polls/${pid}/comments`;
 
 export const GIF_SEARCH_URL = query => `${BASE_URL}gifs/${query}`;
 
-export const PROFILE_URL = `${BASE_URL}api/profile`;
+export const PROFILE_URL = `${BASE_URL}profile`;
 

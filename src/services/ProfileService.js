@@ -1,9 +1,7 @@
 /**
  * Handles user profile data access to the server.
  */
-import { ALL_USERS_URL, USER_DATA_URL } from "../constants";
-
-import { API_USER_URL, PROFILE_URL } from "../constants";
+import { ALL_USERS_URL, PROFILE_URL, USER_DATA_URL } from "../constants";
 
 // API call for profile of logged-in user
 export const findUserProfile = async jwt => {
@@ -32,7 +30,17 @@ export const findAllUsers = async () => {
 */
 export const findUserById = async (jwt, userId) => {
 
-    return await fetch(`${API_USER_URL}/${userId}`, {
+    return await fetch(`${ALL_USERS_URL}/${userId}`, {
+        method: 'GET',
+        headers: {
+            'Content-type': 'application/json',
+            'Authorization': `Bearer ${jwt}`
+        }
+    }).then(response => response.json());
+}
+
+export const findUserPolls = async (jwt, userId, comments = false, polls = true)=> {
+    return await fetch(USER_DATA_URL(userId, comments, polls), {
         method: 'GET',
         headers: {
             'Content-type': 'application/json',
@@ -49,7 +57,7 @@ export const findUserById = async (jwt, userId) => {
 * @param {*} user desired userobject to update
 */
 export const updateUser = async (userId, user, jwt) => {
-    return await fetch(`${API_USER_URL}/${userId}`, {
+    return await fetch(`${ALL_USERS_URL}/${userId}`, {
         method: 'PUT',
         body: JSON.stringify(user),
         headers: {

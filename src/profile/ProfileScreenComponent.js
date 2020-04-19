@@ -30,7 +30,7 @@ class ProfileScreenComponent extends React.Component {
                     'firstName': this.state.userFirstName,
                     'lastName': this.state.userLastName};
 
-            if (this.state.userPassword != '') {
+            if (this.state.userPassword !== '') {
                     user = {...user, 
                         'password': this.state.userPassword};
             }
@@ -103,7 +103,7 @@ class ProfileScreenComponent extends React.Component {
                         <hr className='line-break'></hr>
 
                         <ul>
-                            <li className='user-data-link'><a className='profile-link' href='/'>
+                            <li className='user-data-link'><a className='profile-link' href={this.props.userId ? `${this.state.user.id}/polls`: `profile/${this.state.user.id}/polls`}>
                                 {this.state.sameUser ? `Your Polls` : `${this.state.user.firstName}'s Polls`}
                             </a></li>
                             <li className='user-data-link'><a className='profile-link' href='/'>
