@@ -1,24 +1,38 @@
 .poll {
     background: #86C3E4;
-    box-shadow: 15px 15px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 10px 10px 10px  rgba(0, 0, 0, 0.2);
     border-radius: 15px;
 }
 
 .inner-content {
-    // background-color: red;
-    width: 90%;
-    height: 90%;
-    position: relative;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+
+    .poll-author-name {
+        font-weight: 500;
+        font-size: 18px;
+    }
+    .poll-question-text {
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .poll-byline {
+        font-size: 10px;
+        font-weight: 400;
+        font-style: italic;
+    }
+
 }
 
 .option {
     padding: 4px;
-
-    .question {
-
-    }
 }
 
+.details-link {
+    width: 100%;
+    padding: 5px;
+    border-radius: 0;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: rgb(50, 113, 146);
+    color: white;
+}
