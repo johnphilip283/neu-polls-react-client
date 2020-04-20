@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getAllPolls } from '../services/PollService';
 import PollComponent from '../poll/PollComponent';
 import { findUserProfile } from '../services/ProfileService';
-import { deletePoll } from '../services/PollService';
+import { deletePoll, updatePoll } from '../services/PollService';
 
 const LoggedInHomeScreenComponent = ({ }) => {
     
@@ -28,6 +28,14 @@ const LoggedInHomeScreenComponent = ({ }) => {
                 setPolls(polls.filter(p => p.id !== pid))
             })
 
+    const updatePolls = (pid, poll) => 
+        updatePoll(pid, poll)
+            .then(result => {
+                console.log(result);
+                setPolls(polls.map(p => (p.id === pid ? Object.assign(p, result) : p)));
+            })
+        
+
     const list1 = polls.slice(0, polls.length / 3);
     const list2 = polls.slice(polls.length / 3, (2 * polls.length) / 3);
     const list3 = polls.slice((2 * polls.length) / 3, polls.length);
@@ -42,7 +50,8 @@ const LoggedInHomeScreenComponent = ({ }) => {
                                         {list.map(poll => <PollComponent key={poll.id} poll={poll} showButton={true}
                                                                             viewingUser={user}
                                                                             deletePolls={deletePolls}
-                                                                            authorId={poll.author_id}/>)}
+                                                                            authorId={poll.author_id}
+                                                                            updatePolls={updatePolls}/>)}
                                     </div>
                             )}
             </div>

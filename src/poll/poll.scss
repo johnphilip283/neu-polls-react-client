@@ -22,9 +22,16 @@
         font-style: italic;
     }
 
-    .poll-delete-btn {
+    .poll-changing-btns {
         float: right;
-        font-weight: bold;
+    }
+
+    .poll-edit-btn:hover {
+        color: white;
+    }
+
+    .poll-delete-btn {
+        margin-left: 5px;
     }
 
     .poll-delete-btn:hover {
