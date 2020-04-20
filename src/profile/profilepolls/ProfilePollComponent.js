@@ -31,9 +31,17 @@ const ProfilePollComponent = ({ userId }) => {
 
 
     if (!window.localStorage.getItem('token')) {
-        window.location.replace("/login");
-        return;
-    }
+        return(
+            <div class="container-home">
+                <HeadingComponent/>
+                <div class="alert alert-danger anonymous-profile-notif" role="alert">
+                    <a href="/login">Login</a> to view this user's polls 
+                    and gain full access to NEU Polls!
+                </div>
+            </div>
+        )
+    };
+
 
    return (
       <div class="container-home">
