@@ -15,7 +15,8 @@ const SignupScreenComponent = () => {
              registerUser(user).then(res => {
                 if (res && res.jwt) {
                     window.localStorage.setItem('token', res.jwt);
-                    window.location.replace("/");
+                    alert('Please take the time to read over our privacy policy before continuing on to our application.');
+                    window.location.replace("/privacy");
                 }
             })
         }
