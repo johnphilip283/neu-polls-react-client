@@ -45,7 +45,8 @@ const PollComponent = ({ poll, history, showButton, viewingUser, deletePolls, au
     return (
         <div className="poll m-3">
             <div className="inner-content p-4">
-                <p className='poll-author-name mb-0'>{`${firstName ? firstName + ' ' + lastName : 'Anonymous'}`}
+                <p className='mb-0'>
+                    {firstName ? <a className='poll-author-name' href={`/profile/${authorId}`}>{firstName + ' ' + lastName}</a> : 'Anonymous'}
                     <div className="poll-changing-btns">
                         {editing &&
                         <React.Fragment>
@@ -56,13 +57,11 @@ const PollComponent = ({ poll, history, showButton, viewingUser, deletePolls, au
                         </React.Fragment>
                         }
 
-                        {(((viewingUser && (viewingUser.role === 'admin')) || (viewingUser && (viewingUser.id === authorId))) &&
-                          !editing  ) &&
-                            <FontAwesomeIcon className='poll-edit-btn' icon={faPencilAlt} onClick={() => setEditing(true)} />
-                        }
-                        {(((viewingUser && (viewingUser.role === 'admin')) || (viewingUser && (viewingUser.id === authorId))) &&
-                          !editing  ) && 
-                            <FontAwesomeIcon icon={faTrash} className='poll-delete-btn' onClick={() => deletePolls(poll.id)} />
+                        {((viewingUser && ((viewingUser.role === 'admin') || (viewingUser.id === authorId))) && !editing ) &&
+                            <React.Fragment>
+                                <FontAwesomeIcon className='poll-edit-btn' icon={faPencilAlt} onClick={() => setEditing(true)} />
+                                <FontAwesomeIcon icon={faTrash} className='poll-delete-btn' onClick={() => deletePolls(poll.id)} />
+                            </React.Fragment>
                         }
                     </div>
                 </p>

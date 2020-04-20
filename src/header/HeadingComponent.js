@@ -13,6 +13,17 @@ const HeadingComponent = ({}) => {
           <li className="nav-item">
             <a className="nav-link" href="/privacy">Privacy</a>
           </li>
+          </ul>
+
+          <ul className="navbar-nav ml-auto">
+          <li className="nav-item">
+          { window.localStorage.getItem("token") ? 
+          <a className="nav-link login-logout" href="/login"
+              onClick={() => window.localStorage.removeItem("token")}>Log out</a>
+           : 
+           <a className="nav-link login-logout" href="/login">Log in</a>
+           }
+          </li>
         </ul>
     </nav>
   );
