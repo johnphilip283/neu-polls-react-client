@@ -1,5 +1,7 @@
 export const BASE_URL = 'https://sleepy-savannah-14905.herokuapp.com/api/';
 
+export const ANON_USER_URL = `${BASE_URL}anon/users`;
+
 export const ALL_USERS_URL = `${BASE_URL}users`;
 export const USER_DATA_URL = (uid, comments = false, polls = false) => `${BASE_URL} `;
 
