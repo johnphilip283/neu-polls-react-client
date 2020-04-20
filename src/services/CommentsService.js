@@ -32,6 +32,16 @@ export const getCommentsForPoll = async pid => {
     }).then(res => res.json());
 }
 
+export const postComment = async (pid, comment) => {
+    return await fetch(COMMENTS_FOR_POLL(pid), {
+        method: 'POST',
+        body: JSON.stringify(comment),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${jwt}`
+        }
+    }).then(res => res.json());
+}
 
 export const deleteComment = async cid => {
      return await fetch(COMMENT_URL(cid), {

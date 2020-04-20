@@ -15,18 +15,16 @@ const LoggedInHomeScreenComponent = ({ }) => {
     const list2 = polls.slice(polls.length / 3, (2 * polls.length) / 3);
     const list3 = polls.slice((2 * polls.length) / 3, polls.length);
 
+    const columns = [list1, list2, list3];
+
     return (
         <div>
             <div class="row">
-            <div class="col">
-                {list1.map(poll => <PollComponent key={poll.id} poll={poll}/>)}
-            </div>
-            <div class="col">
-                {list2.map(poll => <PollComponent key={poll.id} poll={poll} />)}
-            </div>
-            <div class="col">
-                {list3.map(poll => <PollComponent key={poll.id} poll={poll}/>)}
-            </div>
+
+                {columns.map(list => <div class="col">
+                                        {list.map(poll => <PollComponent key={poll.id} poll={poll} showButton={true}/>)}
+                                    </div>
+                            )}
             </div>
             <div className="bottom-container">
                 <div className="bottom-notice p-3 align-items-center">

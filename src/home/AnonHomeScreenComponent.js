@@ -30,7 +30,7 @@ const AnonHomeScreenComponent = ({ }) => {
             </div>
             <div className="bottom-container">
             <div className="bottom-notice p-3 align-items-center">
-                <a href='/login'>Log in</a> to see more polls!
+                <a href='/login'>Log in</a> to see and comment on more polls!
                 </div>
             </div>
         </div>

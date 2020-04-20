@@ -10,11 +10,12 @@
         font-weight: 500;
         font-size: 18px;
     }
+    
     .poll-question-text {
         font-size: 18px;
         font-weight: 600;
     }
-
+    
     .poll-byline {
         font-size: 10px;
         font-weight: 400;
@@ -35,4 +36,8 @@
     border-bottom-right-radius: 15px;
     background-color: rgb(50, 113, 146);
     color: white;
+}
+
+.option-bar {
+    height: 2rem;
 }

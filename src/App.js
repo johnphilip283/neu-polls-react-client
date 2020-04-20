@@ -13,7 +13,7 @@ const App = () => {
       <Route exact path="/login" component={LoginContainer}></Route>
       <Route exact path="/profile" component={ProfileScreenComponent}></Route>
       <Route exact path="/profile/:userId" render={props => <ProfileScreenComponent userId={props.match.params.userId}/>}></Route>
-      <Route exact path="/polls/:pid" render={props => <PollDetailComponent pid={props.match.params.pid}/>}></Route>
+      <Route exact path="/details/:pid" render={props => <PollDetailComponent pid={props.match.params.pid}/>}></Route>
     </Router>
   );
 };

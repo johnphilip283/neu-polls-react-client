@@ -5,23 +5,26 @@ import { withRouter } from 'react-router-dom';
 const Option = ({ option, optionHandler }) => {
     return (
         <div class="option">
-             <input type="radio" onClick={optionHandler} className="mr-2" id={option} name="option" value={option}/>
-            <label for={option}>{option}</label>
+            <input type="radio" onClick={optionHandler} className="mr-2" id={option} name="option" value={option}/>
+            <div class="progress option-bar">
+                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">{option}</div>
+            </div>
         </div>
     );
 }
 
-const PollComponent = ({ poll, history }) => {
+const PollComponent = ({ poll, history, showButton }) => {
 
     const jwt = window.localStorage.getItem('token') || '';
 
+    // TODO: IMPLEMENT VOTING
     const [selectedOption, setSelectedOption] = useState('');
     
     const { firstName, lastName, role } = poll.author;
 
     const optionHandler = e => setSelectedOption(e.target.value);
 
-    const viewDetailsHandler = () => history.push(jwt ? `/polls/${poll.id}` : `/login`);
+    const viewDetailsHandler = () => history.push(jwt ? `/details/${poll.id}` : `/login`);
     
     return (
         <div className="poll m-3">
@@ -33,12 +36,15 @@ const PollComponent = ({ poll, history }) => {
                 </div>
                 <p className='poll-question-text mt-2 mb-2'>{poll.text}</p>
                 <form className="options">
-                    {poll.options.map((option, idx) => <Option optionHandler={optionHandler} key={idx} option={option}/>)}
+                    {poll && poll.options && poll.options.map((option, idx) => <Option optionHandler={optionHandler} key={idx} option={option}/>)}
                 </form>
             </div>
-            <button className="details-link" onClick={viewDetailsHandler}>
-                View details
-            </button>
+
+            { showButton && <button className="details-link" onClick={viewDetailsHandler}>
+                                    View details
+                            </button>
+            }
+            
         </div>
     );
 }
