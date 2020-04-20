@@ -18,11 +18,11 @@ const AnonymousProfileScreenComponent = ({ sameUser, user }) => {
                     <ul>
                         <li className='user-data-link'>
                             <a className='profile-link' 
-                                href={`${user.id}/polls`}>{`${user.username}'s Polls`}
+                                href={`/profile/${user.id}/polls`}>{`${user.username}'s Polls`}
                             </a>
                         </li>
                         <li className='user-data-link'>
-                            <a className='profile-link' href='/'>
+                            <a className='profile-link' href={`/profile/${user.id}/comments`}>
                             {`${user.username}'s Comments`}
                             </a>
                         </li>

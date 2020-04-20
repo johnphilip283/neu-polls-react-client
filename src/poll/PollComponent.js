@@ -46,7 +46,7 @@ const PollComponent = ({ poll, history, showButton, viewingUser, deletePolls, au
         <div className="poll m-3">
             <div className="inner-content p-4">
                 <p className='mb-0'>
-                    {firstName ? <a className='poll-author-name' href={`/profile/${authorId}`}>{firstName + ' ' + lastName}</a> : 'Anonymous'}
+                    {firstName ? <a className='poll-author-name' href={authorId && `/profile/${authorId}`}>{firstName + ' ' + lastName}</a> : 'Anonymous'}
                     <div className="poll-changing-btns">
                         {editing &&
                         <React.Fragment>
@@ -66,7 +66,7 @@ const PollComponent = ({ poll, history, showButton, viewingUser, deletePolls, au
                     </div>
                 </p>
                 <div className="poll-byline mt-1">
-                    <span className="poll-role mr-1">{(role === 'user' || !role) ? 'Member' : 'Admin'}</span>-
+                    <span className="poll-role mr-1">{(role === 'user' || !role) ? 'Member' : 'Admin'}</span>
                     <span className='poll-time ml-1'>{new Date(poll.inserted_at).toDateString()}</span>
                 </div>
                 {editing ?
