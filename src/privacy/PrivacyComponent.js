@@ -1,6 +1,6 @@
 import React from 'react';
-import HeadingComponent from '../header/HeadingComponent';
 import './privacy.scss';
+import HeadingComponent from '../header/HeadingComponent';
 import phones from './phones.svg';
 
 const PrivacyComponent = ({ }) => {
@@ -16,9 +16,7 @@ const PrivacyComponent = ({ }) => {
                         <h1>NEU Polls - Privacy Policy</h1>
                         <span>Learn more about how NEU Polls collects, processes, and shares your data.</span>
                     </div>
-
                     <img className=' col-md-6 profile-pic' src={phones} alt='lock-image'/>
-
                 </div>
             </div>
 
