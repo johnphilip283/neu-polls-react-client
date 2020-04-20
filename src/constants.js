@@ -11,6 +11,7 @@ export const ALL_POLLS_URL = (authors = true) => `${BASE_URL}polls?showauthor=${
 export const POLL_URL = (pid, authors = true) => `${BASE_URL}polls/${pid}?showauthor=${authors}`;
 export const ANON_POLL_URL = `${BASE_URL}anon/polls`;
 export const VOTE_POLL_URL = pid => `${POLL_URL(pid)}/votes`;
+export const DELETE_POLL_URL = pid => `${BASE_URL}polls/${pid}`;
 
 export const ALL_COMMENTS_URL = `${BASE_URL}comments`;
 export const COMMENT_URL = cid => `${ALL_COMMENTS_URL}/${cid}`;

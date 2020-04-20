@@ -13,7 +13,7 @@ const Option = ({ option, optionHandler }) => {
     );
 }
 
-const PollComponent = ({ poll, history, showButton }) => {
+const PollComponent = ({ poll, history, showButton, viewingUser, deletePolls, authorId }) => {
 
     const jwt = window.localStorage.getItem('token') || '';
 
@@ -29,7 +29,11 @@ const PollComponent = ({ poll, history, showButton }) => {
     return (
         <div className="poll m-3">
             <div className="inner-content p-4">
-                <p className='poll-author-name mb-0'>{`${firstName ? firstName + ' ' + lastName : 'Anonymous'}`}</p>
+                <p className='poll-author-name mb-0'>{`${firstName ? firstName + ' ' + lastName : 'Anonymous'}`}
+                    {((viewingUser && (viewingUser.role === 'admin')) || (viewingUser && (viewingUser.id === authorId))) && 
+                        <span className="poll-delete-btn" onClick={() => deletePolls(poll.id)}>x</span>
+                    }
+                </p>
                 <div className="poll-byline mt-1">
                     <span className="poll-role mr-1">{(role === 'user' || !role) ? 'Member' : 'Admin'}</span>-
                     <span className='poll-time ml-1'>{new Date(poll.inserted_at).toDateString()}</span>

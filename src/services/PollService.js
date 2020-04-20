@@ -1,4 +1,4 @@
-import { ALL_POLLS_URL, ANON_POLL_URL, VOTE_POLL_URL, POLL_URL } from "../constants";
+import { ALL_POLLS_URL, ANON_POLL_URL, VOTE_POLL_URL, POLL_URL, DELETE_POLL_URL } from "../constants";
 
 const jwt = window.localStorage.getItem('token') || '';
 
@@ -53,10 +53,8 @@ export const findPollById = async pid => {
     }).then(res => res.json());
 }
 
-
-
 export const deletePoll = async pid => {
-    return await fetch(POLL_URL(pid), {
+    return await fetch(DELETE_POLL_URL(pid), {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
