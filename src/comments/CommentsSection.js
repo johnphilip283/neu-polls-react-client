@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './comments.scss';
 
-import { getComment, getCommentsForPoll, deleteComment, updateComment } from '../services/CommentsService';
+import { postComment, getCommentsForPoll, deleteComment, updateComment } from '../services/CommentsService';
+
+import { queryForGif } from '../services/GifService';
+
 import { Button, Modal, Form } from 'react-bootstrap';
 
 const Comment = ({ comment }) => {
@@ -16,18 +19,42 @@ const Comment = ({ comment }) => {
 } 
 const CommentsSection = ({ pid }) => {
 
+    const [userComment, setUserComment] = useState('');
     const [comments, setComments] = useState([]);
+
+    const [gifQuery, setGifQuery] = useState('');
+    const [gifs, setGifs] = useState([]);
+
+    const [selectedGif, setSelectedGif] = useState('');
+
     const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const commentPostHandler = e => setUserComment(e.target.value);
+
+    const gifQueryHandler = e => setGifQuery(e.target.value);
 
     useEffect(() => {
         const fetchData = async () => setComments(await getCommentsForPoll(pid));
         fetchData();
     }, []);
 
-    const submitComment = () => {};
+    useEffect(() => {
+        const fetchGifs = async () => {
+            if (!gifQuery) {
+                return;
+            }
+            setGifs(await queryForGif(gifQuery));
+        }
+        fetchGifs();
+    }, [gifQuery]);
+
+    const submitComment = async () => {
+        await postComment(pid, { embed: selectedGif, comment: "wah wah wah this is a test" });
+        setShow(false);
+    };
 
     return (
         <div className='comments-section m-3 p-4'>
@@ -41,23 +68,19 @@ const CommentsSection = ({ pid }) => {
             </Button>
 
             <Modal show={show} onHide={handleClose}>
-                
                 <Modal.Header closeButton/>
-
                 <Modal.Body>
                     <Form.Group controlId="exampleForm.ControlTextarea1">
-                        <Form.Control as="textarea" rows="3" placeholder='Add a comment...'/>
+                        <Form.Control as="textarea" rows="3" value={userComment} onChange={commentPostHandler} placeholder='Add a comment...'/>
                     </Form.Group>
                 </Modal.Body>
                 <div className='mx-auto'>or</div>
-                
                 <Modal.Body>
                     <Form.Label>Search for a GIF!</Form.Label>
                     <Form.Group controlId="exampleForm.ControlInput1">
-                        <Form.Control type="text" placeholder="Search for GIFs!"/>
+                        <Form.Control value={gifQuery} onChange={gifQueryHandler} type="text"/>
                     </Form.Group>
                 </Modal.Body>
-
                 <Modal.Footer>
                 <Button variant="primary" onClick={submitComment}>
                     Post

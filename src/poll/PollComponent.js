@@ -39,7 +39,6 @@ const PollComponent = ({ poll, history, showButton }) => {
                     {poll && poll.options && poll.options.map((option, idx) => <Option optionHandler={optionHandler} key={idx} option={option}/>)}
                 </form>
             </div>
-
             { showButton && <button className="details-link" onClick={viewDetailsHandler}>
                                     View details
                             </button>

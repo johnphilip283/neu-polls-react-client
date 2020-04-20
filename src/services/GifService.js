@@ -2,7 +2,7 @@ import { GIF_SEARCH_URL } from '../constants';
 
 const jwt = window.localStorage.getItem('token') || '';
 
-const queryForGif = async query => {
+export const queryForGif = async query => {
     return await fetch(GIF_SEARCH_URL(query), {
         method: 'GET',
         headers: {
