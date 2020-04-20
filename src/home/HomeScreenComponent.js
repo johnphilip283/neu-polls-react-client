@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import HeadingComponent from "../header/HeadingComponent";
 import LoggedInHomeScreenComponent from "./LoggedInHomeScreenComponent";
 import AnonHomeScreenComponent from "./AnonHomeScreenComponent";
-import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
-
 import "./homescreen.scss";
 
 const HomeScreenComponent = ({ history }) => {
