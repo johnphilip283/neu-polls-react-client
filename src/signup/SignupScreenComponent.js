@@ -23,13 +23,13 @@ const SignupScreenComponent = ({ history }) => {
                 if (res) {
                     if (res.jwt) {
                         window.localStorage.setItem('token', res.jwt);
-                        history.push("/");
+                        alert('Please take the time to read over our privacy policy before continuing on to our application.');
+                        window.location.replace("/privacy");
                     }
                     if (res.errors) {
                         setError('Error signing up, please check credentials!');    
                     }
-                }
-            })
+            }})
         } else {
             setError('Confirmation does not equal password!');
         }
