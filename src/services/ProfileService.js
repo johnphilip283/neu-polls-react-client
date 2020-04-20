@@ -1,13 +1,7 @@
 /**
  * Handles user profile data access to the server.
  */
-<<<<<<< HEAD
 import { ALL_USERS_URL, PROFILE_URL, USER_DATA_URL, ANON_USER_URL } from "../constants";
-=======
-import { ALL_USERS_URL, USER_DATA_URL } from "../constants";
-
-import { API_USER_URL, PROFILE_URL } from "../constants";
->>>>>>> privacy
 
 // API call for profile of logged-in user
 export const findUserProfile = async jwt => {
