@@ -9,7 +9,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 const LoggedInHomeScreenComponent = ({ history }) => {
-    
+
+    const jwt = window.localStorage.getItem('token');
+
     const [polls, setPolls] = useState([]);
     const [show, setShow] = useState(false);
     const closeModal = () => setShow(false);
@@ -70,7 +72,8 @@ const LoggedInHomeScreenComponent = ({ history }) => {
                                                                             deletePolls={deletePolls}
                                                                             authorId={poll.author_id}
                                                                             updatePolls={updatePolls}
-                                                                            voteForPoll={votePolls}/>)}
+                                                                            voteForPoll={votePolls}
+                                                                            detailsOnly={!jwt}/>)}
                                     </div>
                             )}
             </div>

@@ -30,7 +30,7 @@ const PollDetailComponent = ({ pid }) => {
     return (
         <div>
             <HeadingComponent/>
-            {poll.id && <PollComponent poll={poll} showButton={false}/>}
+            {poll.id && <PollComponent poll={poll} showButton={false} detailsOnly={true}/>}
             <CommentsSection pid={pid}/>
         </div>
     );

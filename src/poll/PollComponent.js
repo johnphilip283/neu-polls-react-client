@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt, faTrash, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { getVotesForPoll } from '../services/PollService';
 
-const Option = ({ option, optionHandler, editing, newOptions, idx, setNewOptions, votes }) => {
+const Option = ({ option, optionHandler, editing, newOptions, idx, setNewOptions, votes, detailsOnly }) => {
 
     const jwt = window.localStorage.getItem('token') || '';
 
@@ -16,11 +16,11 @@ const Option = ({ option, optionHandler, editing, newOptions, idx, setNewOptions
     return (
         <div class="option">
             {editing ?
-            (jwt && <input type="text" onChange={(e) => {newOptions[idx] = e.target.value; setNewOptions(newOptions);}}
+            (!detailsOnly && <input type="text" onChange={(e) => {newOptions[idx] = e.target.value; setNewOptions(newOptions);}}
                     className="form-control" id={option} name="option" placeholder={newOptions[idx]}/>)
             :
             <>
-                {jwt && <input type="radio" onClick={optionHandler} className="mr-2" id={option} name="option" value={option}/>}
+                {!detailsOnly && <input type="radio" onClick={optionHandler} className="mr-2" id={option} name="option" value={option}/>}
                 <label for={option}>{option}</label>
                 <div class="progress option-bar">
                     <div class="progress-bar" role="progressbar" style={{width: `${currVotes}%`}} 
@@ -33,7 +33,7 @@ const Option = ({ option, optionHandler, editing, newOptions, idx, setNewOptions
     );
 }
 
-const PollComponent = ({ poll, history, showButton, viewingUser, deletePolls, authorId, updatePolls, voteForPoll }) => {
+const PollComponent = ({ poll, history, showButton, viewingUser, deletePolls, authorId, updatePolls, voteForPoll, detailsOnly }) => {
 
     const jwt = window.localStorage.getItem('token') || '';
 
@@ -92,9 +92,10 @@ const PollComponent = ({ poll, history, showButton, viewingUser, deletePolls, au
                     {poll && poll.options && poll.options.map((option, idx) => <Option optionHandler={optionHandler} key={idx} idx={idx} 
                                                                                         option={option} editing={editing} newOptions={newOptions}
                                                                                         setNewOptions={setNewOptions}
-                                                                                        votes={poll.poll_votes}/>)}
+                                                                                        votes={poll.poll_votes}
+                                                                                        detailsOnly={detailsOnly}/>)}
                 </form>
-                {!editing && jwt &&
+                {!editing && !detailsOnly &&
                 <button className="button poll-vote-btn"
                         onClick={() => voteForPoll(poll.id, {'vote': selectedOption})}>Vote</button>
                 }
