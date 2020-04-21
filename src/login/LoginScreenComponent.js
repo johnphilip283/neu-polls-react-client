@@ -8,14 +8,17 @@ const LoginScreenComponent = ({ signUpHandler, history }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const usernameHandler = (evt) => setUsername(evt.target.value);
   const passwordHandler = (evt) => setPassword(evt.target.value);
 
   const logIn = () => {
+    setLoading(true);
     loginUser(username, password).then((res) => {
       if (res) {
         if (res.error) {
+          setLoading(false);
           setError(res.error);
         }
         if (res.jwt) {
@@ -54,6 +57,9 @@ const LoginScreenComponent = ({ signUpHandler, history }) => {
         <button className="m-2 p-2 primary shadowed" onClick={signUpHandler}>
           Sign up
         </button>
+        {
+          loading && <p className='text-info mx-auto'>Loading...</p>
+        }
         {
           error && <p className='text-danger mx-auto'>{error}</p>
         }

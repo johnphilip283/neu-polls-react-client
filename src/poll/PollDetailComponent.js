@@ -21,10 +21,6 @@ const PollDetailComponent = ({ pid }) => {
             <CommentsSection pid={pid}/>
         </div>
     );
-
-
-
-
 }
 
 export default PollDetailComponent;

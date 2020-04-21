@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt, faTrash, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { getVotesForPoll } from '../services/PollService';
 
-const Option = ({ option, optionHandler, editing, newOptions, idx, setNewOptions, votes}) => {
+const Option = ({ option, optionHandler, editing, newOptions, idx, setNewOptions, votes }) => {
 
     const [currVotes, setCurrVotes] = useState(0)
 

@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './comments.scss';
-
 import { postComment, getCommentsForPoll, deleteComment, updateComment } from '../services/CommentsService';
-
-import { queryForGif } from '../services/GifService';
-
 import { Button, Modal, Form } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
 
 const Comment = ({ comment }) => {
 
@@ -14,45 +11,30 @@ const Comment = ({ comment }) => {
             <a className='comment-author-name' href={`/profile/${comment.author.id}`}>{comment.author.username}</a> - 
             <span className='comment-time mb-1'>  {new Date(comment.inserted_at).toUTCString()}</span>
             <p className='comment-text mt-1'>{comment.comment}</p>
+            {comment.embed && <img src={comment.embed}/>}
         </div>
     )
 } 
-const CommentsSection = ({ pid }) => {
+const CommentsSection = ({ pid, history }) => {
 
     const [userComment, setUserComment] = useState('');
     const [comments, setComments] = useState([]);
 
-    const [gifQuery, setGifQuery] = useState('');
-    const [gifs, setGifs] = useState([]);
-
-    const [selectedGif, setSelectedGif] = useState('');
-
     const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
+    const closeModal = () => setShow(false);
+    const showModal = () => setShow(true);
     const commentPostHandler = e => setUserComment(e.target.value);
 
-    const gifQueryHandler = e => setGifQuery(e.target.value);
+    const handleGifSearch = () => history.push(`/details/${pid}/search`);
 
     useEffect(() => {
         const fetchData = async () => setComments(await getCommentsForPoll(pid));
         fetchData();
     }, []);
 
-    useEffect(() => {
-        const fetchGifs = async () => {
-            if (!gifQuery) {
-                return;
-            }
-            setGifs(await queryForGif(gifQuery));
-        }
-        fetchGifs();
-    }, [gifQuery]);
-
     const submitComment = async () => {
-        await postComment(pid, { embed: selectedGif, comment: "wah wah wah this is a test" });
+        await postComment(pid, { embed: '', comment: userComment });
         setShow(false);
     };
 
@@ -63,22 +45,19 @@ const CommentsSection = ({ pid }) => {
                 {comments && comments.map(comment => <Comment comment={comment}/>)}
             </div>
             <div className='m-3'></div>
-            <Button variant="primary" onClick={handleShow}>
+            <button className="btn btn-primary" onClick={showModal}>
                 Add comment!
-            </Button>
+            </button>
 
-            <Modal show={show} onHide={handleClose}>
+            <button className="btn btn-primary float-right" onClick={handleGifSearch}>
+                Search for GIFs!
+            </button>
+
+            <Modal show={show} onHide={closeModal}>
                 <Modal.Header closeButton/>
                 <Modal.Body>
                     <Form.Group controlId="exampleForm.ControlTextarea1">
                         <Form.Control as="textarea" rows="3" value={userComment} onChange={commentPostHandler} placeholder='Add a comment...'/>
-                    </Form.Group>
-                </Modal.Body>
-                <div className='mx-auto'>or</div>
-                <Modal.Body>
-                    <Form.Label>Search for a GIF!</Form.Label>
-                    <Form.Group controlId="exampleForm.ControlInput1">
-                        <Form.Control value={gifQuery} onChange={gifQueryHandler} type="text"/>
                     </Form.Group>
                 </Modal.Body>
                 <Modal.Footer>
@@ -91,4 +70,4 @@ const CommentsSection = ({ pid }) => {
     );
 }
 
-export default CommentsSection;
+export default withRouter(CommentsSection);
