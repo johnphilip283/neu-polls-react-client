@@ -11,6 +11,8 @@ import GifDescriptionComponent from '../gifs/GifDescriptionComponent';
 
 const AddCommentAndSearchComponent = ({ pid, location, history }) => {
 
+    const jwt = window.localStorage.getItem('token');
+
     const searchResult = new URLSearchParams(location.search).get('query') || '';
 
     const [userComment, setUserComment] = useState('');
@@ -64,6 +66,17 @@ const AddCommentAndSearchComponent = ({ pid, location, history }) => {
 
     const commentHandler = e => setUserComment(e.target.value);
 
+    if (!jwt) {
+        return (
+            <div>
+                <HeadingComponent/>
+                <div class="alert alert-danger anonymous-profile-notif" role="alert">
+                        <a href="/login">Login</a> to view details on polls, post GIFs,
+                        and gain full access to NEU Polls!
+                </div>
+            </div>
+        )
+    }
     return (
         <>
             <HeadingComponent/>
