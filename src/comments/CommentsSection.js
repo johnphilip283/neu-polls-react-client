@@ -6,12 +6,15 @@ import { withRouter } from 'react-router-dom';
 
 const Comment = ({ comment }) => {
 
+    const { author, inserted_at, embed, comment: text } = comment;
+    const { id, username } = author;
+
     return (
         <div className='comment p-3'>
-            <a className='comment-author-name' href={`/profile/${comment.author.id}`}>{comment.author.username}</a> - 
-            <span className='comment-time mb-1'>  {new Date(comment.inserted_at).toUTCString()}</span>
-            <p className='comment-text mt-1'>{comment.comment}</p>
-            {comment.embed && <img src={comment.embed}/>}
+            <a className='comment-author-name' href={`/profile/${id}`}>{username}</a> - 
+            <span className='comment-time mb-1'> {new Date(inserted_at).toUTCString()}</span>
+            <p className='comment-text mt-1'>{text}</p>
+            {embed && <img src={embed}/>}
         </div>
     )
 } 
@@ -33,9 +36,12 @@ const CommentsSection = ({ pid, history }) => {
         fetchData();
     }, []);
 
+
+
     const submitComment = async () => {
         await postComment(pid, { embed: '', comment: userComment });
         setShow(false);
+        setComments(await getCommentsForPoll(pid));
     };
 
     return (
@@ -48,7 +54,6 @@ const CommentsSection = ({ pid, history }) => {
             <button className="btn btn-primary" onClick={showModal}>
                 Add comment!
             </button>
-
             <button className="btn btn-primary float-right" onClick={handleGifSearch}>
                 Search for GIFs!
             </button>
