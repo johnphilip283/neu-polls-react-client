@@ -6,18 +6,20 @@ const GifDescriptionComponent = ({ gif }) => {
         return null;
     }
 
+    const {images, rating, source_tld, url, trending_datetime } = gif;
+
     return (
         <div className='text-center img-responsive preview'>
             <div className='d-flex justify-content-center'>
                 <div className='text-center img-responsive image-container mt-3'>
-                    <img className='m-3' src={gif.images.fixed_width.url} alt=""/>
+                    <img className='m-3' src={images.fixed_width.url} alt=""/>
                 </div>
             </div>
             <div className='gif-description p-4'>
-                {gif.rating && <p>Rating: {gif.rating.toUpperCase()}</p>}
-                {gif.source_tld && <p>Original Source: <a href={gif.source_tld}>{gif.source_tld}</a></p>}
-                {gif.url && <p>Original GIPHY Link: {gif.url}</p>}
-                {gif.trending_datetime && gif.trending_datetime !== '1970-01-01T00:00:00' && <p>GIF was trending around: {new Date(gif.trending_datetime).toLocaleDateString()}</p>}
+                {rating && <p>Rating: {rating.toUpperCase()}</p>}
+                {source_tld && <p>Original Source: <a href={source_tld}>{source_tld}</a></p>}
+                {url && <p>Original GIPHY Link: {url}</p>}
+                {trending_datetime && trending_datetime !== '1970-01-01T00:00:00' && <p>GIF was trending around: {new Date(trending_datetime).toLocaleDateString()}</p>}
             </div>
         </div>
 
