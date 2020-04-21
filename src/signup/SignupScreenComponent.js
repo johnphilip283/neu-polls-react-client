@@ -13,13 +13,9 @@ const SignupScreenComponent = ({ history }) => {
     const confirmationHandler = evt => setConfirmation(evt.target.value);
     
     const signUp = () => {
-        console.log(confirmation);
-        console.log(user.password);
-
 
         if (confirmation === user.password) {
              registerUser(user).then(res => {
-                 console.log(res);
                 if (res) {
                     if (res.jwt) {
                         window.localStorage.setItem('token', res.jwt);

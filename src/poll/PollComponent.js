@@ -50,7 +50,12 @@ const PollComponent = ({ poll, history, showButton, viewingUser, deletePolls, au
     const optionHandler = e => setSelectedOption(e.target.value);
 
     const viewDetailsHandler = () => history.push(jwt ? `/details/${poll.id}` : `/login`);
-    
+
+    const updateHandler = () => {
+        updatePolls(poll.id, {...poll, 'text': newPollText, 'options': newOptions})
+        setEditing(false);
+    }
+
     return (
         <div className="poll m-3">
             <div className="inner-content p-4">
@@ -58,20 +63,18 @@ const PollComponent = ({ poll, history, showButton, viewingUser, deletePolls, au
                     {firstName ? <a className='poll-author-name' href={authorId && `/profile/${authorId}`}>{firstName + ' ' + lastName}</a> : 'Anonymous'}
                     <div className="poll-changing-btns">
                         {editing &&
-                        <React.Fragment>
+                        <>
                             <FontAwesomeIcon className='poll-edit-btn' icon={faCheck} 
-                                            onClick={() => {updatePolls(poll.id, {'text': newPollText, 'options': newOptions})
-                                                            setEditing(false);
-                                                            }} />
+                                            onClick={updateHandler} />
                             <FontAwesomeIcon className='poll-delete-btn' icon={faTimes} onClick={() => setEditing(false)} />
-                        </React.Fragment>
+                        </>
                         }
 
                         {((viewingUser && ((viewingUser.role === 'admin') || (viewingUser.id === authorId))) && !editing ) &&
-                            <React.Fragment>
+                            <>
                                 <FontAwesomeIcon className='poll-edit-btn' icon={faPencilAlt} onClick={() => setEditing(true)} />
                                 <FontAwesomeIcon icon={faTrash} className='poll-delete-btn' onClick={() => deletePolls(poll.id)} />
-                            </React.Fragment>
+                            </>
                         }
                     </div>
                 </p>

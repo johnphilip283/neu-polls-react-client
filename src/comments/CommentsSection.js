@@ -35,9 +35,7 @@ const CommentsSection = ({ pid, history }) => {
         const fetchData = async () => setComments(await getCommentsForPoll(pid));
         fetchData();
     }, []);
-
-
-
+    
     const submitComment = async () => {
         await postComment(pid, { embed: '', comment: userComment });
         setShow(false);

@@ -52,7 +52,6 @@ const ProfilePollCommentComponent = ({ userId, type }) => {
     const updatePolls = (pid, poll) => 
     updatePoll(pid, poll)
         .then(result => {
-            console.log(result);
             setPolls(polls.map(p => (p.id === pid ? Object.assign(p, result) : p)));
         })
 
