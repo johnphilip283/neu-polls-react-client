@@ -28,11 +28,12 @@ class LoggedInProfileScreenComponent extends React.Component {
                         <ul>
                             <li className='user-data-link'>
                                 <a className='profile-link' 
-                                    href={this.props.userId ? `${this.props.user.id}/polls` :
-                                     `profile/${this.props.user.id}/polls`}>
+                                    href={`/profile/${this.props.user.id}/polls`}>
                                 {this.props.sameUser ? `Your Polls` : `${this.props.user.firstName}'s Polls`}
-                            </a></li>
-                            <li className='user-data-link'><a className='profile-link' href='/'>
+                                </a>
+                            </li>
+                            <li className='user-data-link'>
+                                <a className='profile-link' href={`/profile/${this.props.user.id}/comments`}>
                                 {this.props.sameUser ? `Your Comments` : `${this.props.user.firstName}'s Comments`}
                             </a></li>
                         </ul>

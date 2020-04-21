@@ -9,6 +9,7 @@
     .poll-author-name {
         font-weight: 500;
         font-size: 18px;
+        color: black;
     }
     
     .poll-question-text {
@@ -20,6 +21,26 @@
         font-size: 10px;
         font-weight: 400;
         font-style: italic;
+    }
+
+    .poll-changing-btns {
+        float: right;
+    }
+
+    .poll-edit-btn:hover {
+        color: white;
+    }
+
+    .poll-delete-btn {
+        margin-left: 5px;
+    }
+
+    .poll-delete-btn:hover {
+        color: white;
+    }
+
+    .poll-vote-btn {
+        margin-top: 10px;
     }
 
 }

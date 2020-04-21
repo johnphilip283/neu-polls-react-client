@@ -1,11 +1,11 @@
-import { ALL_POLLS_URL, ANON_POLL_URL, VOTE_POLL_URL, POLL_URL, BASE_POLLS_URL } from "../constants";
+import { ALL_POLLS_URL, ANON_POLL_URL, VOTE_POLL_URL, POLL_URL, DELETE_POLL_URL, BASE_POLLS_URL } from "../constants";
 
 const jwt = window.localStorage.getItem('token') || '';
 
 export const voteForPoll = async (pid, option) => {
     return await fetch(VOTE_POLL_URL(pid), {
         method: 'POST',
-        body: JSON.stringify({option}),
+        body: JSON.stringify(option),
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${jwt}`
@@ -34,7 +34,7 @@ export const getAllPolls = async (showAuthors = false) => {
 }
 
 export const getVotesForPoll = async pid => {
-    return await fetch(VOTE_POLL_URL(pid), {
+    return await fetch(POLL_URL(pid), {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -64,9 +64,8 @@ export const createPoll = async poll => {
     }).then(res => res.json());
 }
 
-
 export const deletePoll = async pid => {
-    return await fetch(POLL_URL(pid), {
+    return await fetch(DELETE_POLL_URL(pid), {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

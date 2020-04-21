@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { getAllPolls, createPoll } from '../services/PollService';
+
+import { getAllPolls, deletePoll, updatePoll, voteForPoll, findPollById, createPoll } from '../services/PollService';
+
+import { findUserProfile } from '../services/ProfileService';
+
 import PollComponent from '../poll/PollComponent';
 import { Modal, Form } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 
 const LoggedInHomeScreenComponent = ({ history }) => {
     
@@ -19,11 +24,40 @@ const LoggedInHomeScreenComponent = ({ history }) => {
     const handleOptions = e => setOptionString(e.target.value);
     const handleQuestion = e => setQuestion(e.target.value);
 
+    // admin delete capabilities
+    const [user, setUser] = useState({});
+
+    useEffect(() => {
+        const fetchViewerData = async () => setUser(await findUserProfile(window.localStorage.getItem('token')));
+        fetchViewerData();
+
+    }, []);
+
     useEffect(() => {
         const fetchData = async () => setPolls(await getAllPolls(true));
         fetchData();
     }, []);
 
+    const deletePolls = (pid) =>
+        deletePoll(pid)
+            .then(result => {
+                setPolls(polls.filter(p => p.id !== pid))
+            })
+
+    const updatePolls = (pid, poll) => 
+        updatePoll(pid, poll)
+            .then(result => {
+                setPolls(polls.map(p => (p.id === pid ? Object.assign(p, result) : p)));
+            })
+
+    const votePolls = (pid, vote) =>
+        voteForPoll(pid, vote)
+            .then(newVote => {
+                findPollById(newVote.poll_id)
+                    .then(updatedPoll =>
+                        setPolls(polls.map(p => (p.id === pid ? Object.assign(p, updatedPoll) : p))))
+            })
+            
     const submitPoll = async () => {
         let options = optionString.split(',');
         await createPoll({ text: question, options });
@@ -40,7 +74,12 @@ const LoggedInHomeScreenComponent = ({ history }) => {
         <div>
             <div class="row">
                 {columns.map(list => <div class="col">
-                                        {list.map(poll => <PollComponent key={poll.id} poll={poll} showButton={true}/>)}
+                                        {list.map(poll => <PollComponent key={poll.id} poll={poll} showButton={true}
+                                                                            viewingUser={user}
+                                                                            deletePolls={deletePolls}
+                                                                            authorId={poll.author_id}
+                                                                            updatePolls={updatePolls}
+                                                                            voteForPoll={votePolls}/>)}
                                     </div>
                             )}
             </div>
