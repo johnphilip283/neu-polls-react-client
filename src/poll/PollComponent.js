@@ -7,7 +7,7 @@ const Option = ({ option, optionHandler }) => {
         <div class="option">
             <input type="radio" onClick={optionHandler} className="mr-2" id={option} name="option" value={option}/>
             <div class="progress option-bar">
-                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">{option}</div>
+                <div class="progress-bar p-3" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">{option}</div>
             </div>
         </div>
     );
