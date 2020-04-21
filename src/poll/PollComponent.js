@@ -7,27 +7,27 @@ import { getVotesForPoll } from '../services/PollService';
 
 const Option = ({ option, optionHandler, editing, newOptions, idx, setNewOptions, votes }) => {
 
+    const jwt = window.localStorage.getItem('token') || '';
+
     const [currVotes, setCurrVotes] = useState(0)
 
-    useEffect(() => {
-        setCurrVotes(Math.round(((votes.reduce((cnt, v) => v["vote"] === option ? cnt + 1 : cnt, 0)) / votes.length) * 100))
-    });
+    useEffect(() => setCurrVotes(Math.round(((votes.reduce((cnt, v) => v["vote"] === option ? cnt + 1 : cnt, 0)) / votes.length) * 100)));
 
     return (
         <div class="option">
             {editing ?
-            <input type="text" onChange={(e) => {newOptions[idx] = e.target.value; setNewOptions(newOptions);}}
-                    className="form-control" id={option} name="option" placeholder={newOptions[idx]}/>
+            (jwt && <input type="text" onChange={(e) => {newOptions[idx] = e.target.value; setNewOptions(newOptions);}}
+                    className="form-control" id={option} name="option" placeholder={newOptions[idx]}/>)
             :
-            <React.Fragment>
-                <input type="radio" onClick={optionHandler} className="mr-2" id={option} name="option" value={option}/>
+            <>
+                {jwt && <input type="radio" onClick={optionHandler} className="mr-2" id={option} name="option" value={option}/>}
                 <label for={option}>{option}</label>
                 <div class="progress option-bar">
                     <div class="progress-bar" role="progressbar" style={{width: `${currVotes}%`}} 
                         aria-valuenow={currVotes} aria-valuemin="0" aria-valuemax="100">
                     </div>
                 </div>
-            </React.Fragment>
+            </>
             }
         </div>
     );
@@ -69,7 +69,6 @@ const PollComponent = ({ poll, history, showButton, viewingUser, deletePolls, au
                             <FontAwesomeIcon className='poll-delete-btn' icon={faTimes} onClick={() => setEditing(false)} />
                         </>
                         }
-
                         {((viewingUser && ((viewingUser.role === 'admin') || (viewingUser.id === authorId))) && !editing ) &&
                             <>
                                 <FontAwesomeIcon className='poll-edit-btn' icon={faPencilAlt} onClick={() => setEditing(true)} />
@@ -95,7 +94,7 @@ const PollComponent = ({ poll, history, showButton, viewingUser, deletePolls, au
                                                                                         setNewOptions={setNewOptions}
                                                                                         votes={poll.poll_votes}/>)}
                 </form>
-                {!editing && 
+                {!editing && jwt &&
                 <button className="button poll-vote-btn"
                         onClick={() => voteForPoll(poll.id, {'vote': selectedOption})}>Vote</button>
                 }

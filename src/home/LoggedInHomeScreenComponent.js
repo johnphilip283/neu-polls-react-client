@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
-
 import { getAllPolls, deletePoll, updatePoll, voteForPoll, findPollById, createPoll } from '../services/PollService';
-
 import { findUserProfile } from '../services/ProfileService';
-
 import PollComponent from '../poll/PollComponent';
 import { Modal, Form } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
@@ -30,7 +27,6 @@ const LoggedInHomeScreenComponent = ({ history }) => {
     useEffect(() => {
         const fetchViewerData = async () => setUser(await findUserProfile(window.localStorage.getItem('token')));
         fetchViewerData();
-
     }, []);
 
     useEffect(() => {
@@ -38,30 +34,25 @@ const LoggedInHomeScreenComponent = ({ history }) => {
         fetchData();
     }, []);
 
-    const deletePolls = (pid) =>
-        deletePoll(pid)
-            .then(result => {
-                setPolls(polls.filter(p => p.id !== pid))
-            })
-
-    const updatePolls = (pid, poll) => 
-        updatePoll(pid, poll)
-            .then(result => {
-                setPolls(polls.map(p => (p.id === pid ? Object.assign(p, result) : p)));
-            })
-
-    const votePolls = (pid, vote) =>
-        voteForPoll(pid, vote)
-            .then(newVote => {
-                findPollById(newVote.poll_id)
-                    .then(updatedPoll =>
-                        setPolls(polls.map(p => (p.id === pid ? Object.assign(p, updatedPoll) : p))))
-            })
+    const deletePolls = async pid => {
+        await deletePoll(pid);
+        setPolls(await getAllPolls(true));
+    }
+       
+    const updatePolls = async (pid, poll) => {
+        const res = await updatePoll(pid, poll);
+        setPolls(await getAllPolls(true));
+    }
+        
+    const votePolls = async (pid, vote) => {
+        await voteForPoll(pid, vote);
+        setPolls(await getAllPolls(true));
+    }
             
     const submitPoll = async () => {
         let options = optionString.split(',');
         await createPoll({ text: question, options });
-        window.location.reload();
+        setPolls(await getAllPolls(true));
     }
 
     const list1 = polls.slice(0, polls.length / 3);
