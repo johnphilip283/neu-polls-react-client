@@ -77,6 +77,7 @@ const AddCommentAndSearchComponent = ({ pid, location, history }) => {
             </div>
         )
     }
+    
     return (
         <>
             <HeadingComponent/>

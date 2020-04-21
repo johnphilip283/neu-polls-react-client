@@ -52,7 +52,7 @@ const PollComponent = ({ poll, history, showButton, viewingUser, deletePolls, au
     const viewDetailsHandler = () => history.push(jwt ? `/details/${poll.id}` : `/login`);
 
     const updateHandler = () => {
-        updatePolls(poll.id, {...poll, 'text': newPollText, 'options': newOptions})
+        updatePolls(poll.id, {'text': newPollText, 'options': newOptions})
         setEditing(false);
     }
 
