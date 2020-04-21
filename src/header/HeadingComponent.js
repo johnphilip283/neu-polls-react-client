@@ -1,8 +1,12 @@
 import React from "react";
 import "./heading.scss";
 
-const HeadingComponent = ({}) => {
+const HeadingComponent = ({ }) => {
 
+  const jwt = window.localStorage.getItem("token") || '';
+
+  const logOut = () => window.localStorage.removeItem("token");
+   
   return (
     <nav className="navbar p-3 heading">
       <span className="brand">NEU Polls</span>
@@ -13,13 +17,15 @@ const HeadingComponent = ({}) => {
           <li className="nav-item">
             <a className="nav-link" href="/privacy">Privacy</a>
           </li>
-          </ul>
-
-          <ul className="navbar-nav ml-auto">
+          <li className='nav-item'>
+            <a className='nav-link' href='/profile'>Profile</a>
+          </li>
+        </ul>
+        <ul className="navbar-nav ml-auto">
           <li className="nav-item">
-          { window.localStorage.getItem("token") ? 
+          { jwt ? 
           <a className="nav-link login-logout" href="/login"
-              onClick={() => window.localStorage.removeItem("token")}>Log out</a>
+              onClick={logOut}>Log out</a>
            : 
            <a className="nav-link login-logout" href="/login">Log in</a>
            }
