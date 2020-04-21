@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { findUserPolls } from '../services/ProfileService';
 import HeadingComponent from '../header/HeadingComponent';
-import { findPollById, deletePoll, updatePoll, voteForPoll } from '../services/PollService';
+import { findPollById, deletePoll, updatePoll, voteForPoll, getAllPolls } from '../services/PollService';
 import PollComponent from '../poll/PollComponent';
 import './profile.scss';
 
@@ -55,10 +55,16 @@ const ProfilePollCommentComponent = ({ userId, type }) => {
             setPolls(polls.map(p => (p.id === pid ? Object.assign(p, result) : p)));
         })
 
+    const votePolls = async (pid, vote) => {
+        await voteForPoll(pid, vote);
+        setPolls(await getAllPolls(true));
+    }
+
     const list1 = polls.slice(0, polls.length / 3);
     const list2 = polls.slice(polls.length / 3, (2 * polls.length) / 3);
     const list3 = polls.slice((2 * polls.length) / 3, polls.length);
 
+    const jwt = window.localStorage.getItem('token') || '';
 
     if (!window.localStorage.getItem('token')) {
         return(
@@ -92,18 +98,20 @@ const ProfilePollCommentComponent = ({ userId, type }) => {
             <div class="col">
                 {list3.map(poll => <PollComponent key={poll.id} poll={poll} showButton={(type === 'poll') ? false : true}
                                                     viewingUser={user} deletePolls={deletePolls}
-                                                    authorId={poll.author_id} updatePolls={updatePolls}/>)}
+                                                    authorId={poll.author_id} updatePolls={updatePolls}
+                                                    voteForPoll={votePolls} detailsOnly={!jwt}/>)}
             </div>
             <div class="col">
                 {list2.map(poll => <PollComponent key={poll.id} poll={poll} showButton={(type === 'poll') ? false : true}
                                                     viewingUser={user} deletePolls={deletePolls}
                                                     authorId={poll.author_id} updatePolls={updatePolls}
-                                                    voteForPoll={voteForPoll} />)}
+                                                    voteForPoll={votePolls} detailsOnly={!jwt}/>)}
             </div>
             <div class="col">
                 {list1.map(poll => <PollComponent key={poll.id} poll={poll} showButton={(type === 'poll') ? false : true}
                                                     viewingUser={user} deletePolls={deletePolls}
-                                                    authorId={poll.author_id} updatePolls={updatePolls}/>)}
+                                                    authorId={poll.author_id} updatePolls={updatePolls}
+                                                    voteForPoll={votePolls} detailsOnly={!jwt}/>)}
             </div>
             </div>
             <div className="bottom-container">

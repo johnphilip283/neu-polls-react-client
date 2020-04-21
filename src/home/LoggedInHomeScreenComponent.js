@@ -44,7 +44,7 @@ const LoggedInHomeScreenComponent = ({ history }) => {
     const updatePolls = async (pid, poll) => {
         const res = await updatePoll(pid, poll);
         setPolls(await getAllPolls(true));
-    }
+    } 
         
     const votePolls = async (pid, vote) => {
         await voteForPoll(pid, vote);

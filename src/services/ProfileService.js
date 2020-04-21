@@ -3,6 +3,8 @@
  */
 import { ALL_USERS_URL, PROFILE_URL, USER_DATA_URL, ANON_USER_URL } from "../constants";
 
+const jwt = window.localStorage.getItem('token') || '';
+
 // API call for profile of logged-in user
 export const findUserProfile = async jwt => {
 
@@ -80,4 +82,15 @@ export const anonFindUserById = async (userId) => {
             'Content-type': 'application/json'
         }
     }).then(response => response.json());
+}
+
+// delete user
+export const deleteUser = async (userId) => {
+    return await fetch(`${ALL_USERS_URL}/${userId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${jwt}`
+        }
+    }).then(res => res.json());
 }
