@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { findUserPolls } from '../services/ProfileService';
 import HeadingComponent from '../header/HeadingComponent';
-import { findPollById, deletePoll, updatePoll } from '../services/PollService';
+import { findPollById, deletePoll, updatePoll, voteForPoll } from '../services/PollService';
 import PollComponent from '../poll/PollComponent';
 import './profile.scss';
 
@@ -98,7 +98,8 @@ const ProfilePollCommentComponent = ({ userId, type }) => {
             <div class="col">
                 {list2.map(poll => <PollComponent key={poll.id} poll={poll} showButton={(type === 'poll') ? false : true}
                                                     viewingUser={user} deletePolls={deletePolls}
-                                                    authorId={poll.author_id} updatePolls={updatePolls} />)}
+                                                    authorId={poll.author_id} updatePolls={updatePolls}
+                                                    voteForPoll={voteForPoll} />)}
             </div>
             <div class="col">
                 {list1.map(poll => <PollComponent key={poll.id} poll={poll} showButton={(type === 'poll') ? false : true}

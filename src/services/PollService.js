@@ -5,7 +5,7 @@ const jwt = window.localStorage.getItem('token') || '';
 export const voteForPoll = async (pid, option) => {
     return await fetch(VOTE_POLL_URL(pid), {
         method: 'POST',
-        body: JSON.stringify({option}),
+        body: JSON.stringify(option),
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${jwt}`
@@ -34,7 +34,7 @@ export const getAllPolls = async (showAuthors = false) => {
 }
 
 export const getVotesForPoll = async pid => {
-    return await fetch(VOTE_POLL_URL(pid), {
+    return await fetch(POLL_URL(pid), {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
