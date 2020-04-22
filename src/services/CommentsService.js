@@ -7,7 +7,7 @@ export const getAllComments = async () => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${jwt}`
+            'Authorization': `Bearer ${window.localStorage.getItem('token')}`
         }
     }).then(res => res.json());
 }
@@ -17,7 +17,7 @@ export const getComment = async cid => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${jwt}`
+            'Authorization': `Bearer ${window.localStorage.getItem('token')}`
         }
     }).then(res => res.json());
 }
@@ -27,7 +27,7 @@ export const getCommentsForPoll = async pid => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${jwt}`
+            'Authorization': `Bearer ${window.localStorage.getItem('token')}`
         }
     }).then(res => res.json());
 }
@@ -38,7 +38,7 @@ export const postComment = async (pid, comment) => {
         body: JSON.stringify(comment),
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${jwt}`
+            'Authorization': `Bearer ${window.localStorage.getItem('token')}`
         }
     }).then(res => res.json());
 }
@@ -48,7 +48,7 @@ export const deleteComment = async cid => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${jwt}`
+            'Authorization': `Bearer ${window.localStorage.getItem('token')}`
         }
     }).then(res => res.json());
 }
@@ -59,7 +59,7 @@ export const updateComment = async (cid, body) => {
         body: JSON.stringify(body),
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${jwt}`
+            'Authorization': `Bearer ${window.localStorage.getItem('token')}`
         }
     }).then(res => res.json());
 }
