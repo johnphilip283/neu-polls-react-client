@@ -1,6 +1,6 @@
 import { ALL_POLLS_URL, ANON_POLL_URL, VOTE_POLL_URL, POLL_URL, DELETE_POLL_URL, BASE_POLLS_URL } from "../constants";
 
-const jwt = window.localStorage.getItem('token') || '';
+const jwt = window.localStorage.getItem('token');
 
 export const voteForPoll = async (pid, option) => {
     return await fetch(VOTE_POLL_URL(pid), {
@@ -28,7 +28,7 @@ export const getAllPolls = async (showAuthors = false) => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${jwt}`
+            'Authorization': `Bearer ${window.localStorage.getItem('token')}`
         }
     }).then(res => res.json());
 }
