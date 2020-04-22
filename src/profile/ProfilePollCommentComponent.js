@@ -32,12 +32,11 @@ const ProfilePollCommentComponent = ({ userId, type }) => {
                     .then(result => {
 
                         setUser(result);
-                        const ids = [...new Set(result.comments.map(c => c.poll_id))]
-
-                        ids.map(c_id => {
-                            findPollById(c_id)
+                        
+                        result.comments.map(c => 
+                            findPollById(c.poll_id)
                                 .then(p => setPolls(prevState => ([...prevState, p])))
-                        })
+                        )
                     })
             };
             fetchData();

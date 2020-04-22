@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getAllPolls, deletePoll, updatePoll, voteForPoll, findPollById, createPoll } from '../services/PollService';
+import { getAllPolls, deletePoll, updatePoll, voteForPoll, createPoll } from '../services/PollService';
 import { findUserProfile } from '../services/ProfileService';
 import PollComponent from '../poll/PollComponent';
 import { Modal, Form } from 'react-bootstrap';

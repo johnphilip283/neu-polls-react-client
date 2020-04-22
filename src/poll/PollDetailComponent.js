@@ -13,7 +13,7 @@ const PollDetailComponent = ({ pid }) => {
     useEffect(() => {
         const fetchData = async () => setPoll(await findPollById(pid));
         fetchData();
-    }, []);
+    }, [pid]);
 
     if (!jwt) {
         return (
