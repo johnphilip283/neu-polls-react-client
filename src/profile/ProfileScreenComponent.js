@@ -1,6 +1,6 @@
 import React from 'react';
 import HeadingComponent from '../header/HeadingComponent';
-import {findUserById, updateUser, findUserProfile, anonFindUserById } from '../services/ProfileService';
+import {findUserById, updateUser, findUserProfile, anonFindUserById, deleteUser } from '../services/ProfileService';
 import './profile.scss';
 import LoggedInProfileScreenComponent from './LoggedInProfileScreenComponent';
 import AnonymousProfileScreenComponent from './AnonymousProfileScreenComponent';
@@ -11,13 +11,36 @@ class ProfileScreenComponent extends React.Component {
         sameUser: false,
         user: {},
         currBrowsing: {},
-        anonymous: false
+        anonymous: false,
+        deleted: false
     }
 
     updateUser = (user) => {
 
-        updateUser(this.state.user.id, user, window.localStorage.getItem('token'))
-            .then(update => this.componentDidMount())
+        if (this.state.sameUser) {
+            if (user.password.length < 8) {
+                alert('Error: new password must be at least 8 characters.')
+            }
+
+            else {
+                updateUser(this.state.user.id, user, window.localStorage.getItem('token'))
+                .then(update => this.componentDidMount())
+            }
+        }
+
+        else {
+            updateUser(this.state.user.id, user, window.localStorage.getItem('token'))
+                .then(update => this.componentDidMount())
+        }
+    }
+
+    adminDeleteUser = (uid) => {
+        deleteUser(uid)
+            .then(update => {
+                alert('Successfully deleted user.')
+                this.setState({deleted: true})
+                window.location.replace("/");
+            })
     }
 
     componentDidMount = async () => {
@@ -80,14 +103,21 @@ class ProfileScreenComponent extends React.Component {
             <div>
                 <HeadingComponent/>
 
-                {this.state.anonymous ?
+                {(this.state.anonymous && !this.props.userId) ?
+
+                this.props.history.push('/login')
+
+                :
+
+                this.state.anonymous ?
 
                 <AnonymousProfileScreenComponent user={this.state.user}
                                                  sameUser={this.state.sameUser} />
                 :
                 <LoggedInProfileScreenComponent {...this.state} 
                                                 updateUser={this.updateUser}
-                                                userId={this.props.userId} />
+                                                userId={this.props.userId}
+                                                deleteUser={this.adminDeleteUser} />
                 }
         </div>
 

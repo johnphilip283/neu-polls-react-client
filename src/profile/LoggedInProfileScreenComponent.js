@@ -177,12 +177,18 @@ class LoggedInProfileScreenComponent extends React.Component {
 
                             {(this.props.sameUser || this.props.currBrowsing.role === 'admin') && 
                             <div className='d-flex justify-content-center'>
+                            {this.props.currBrowsing.role === 'admin' &&
+                            <button type='button' className='update-profile-btn delete-btn shadowed p-2'
+                                    onClick={() => this.props.deleteUser(this.props.user.id)}>Delete User
+                            </button>
+                            }
                             <button type='button'
                                     className='update-profile-btn shadowed p-2' 
                                     onClick={() => {
                                         var user = {};
 
                                         if (this.props.sameUser) {
+
                                             if (this.state.userUsername !== '') {
                                                 user = {...user, 'username': this.state.userUsername}
                                             }
@@ -195,7 +201,10 @@ class LoggedInProfileScreenComponent extends React.Component {
                                             if (this.state.userLastName !== '') {
                                                 user = {...user, 'lastName': this.state.userLastName}
                                             }
+                        
                                             if (this.state.userPassword !== '') {
+
+                                                if (this.state.userPassword.length > 8) {}
                                                     user = {...user, 'password': this.state.userPassword};
                                             }
                                         };
@@ -204,6 +213,7 @@ class LoggedInProfileScreenComponent extends React.Component {
                                             user = {...user, 'role': this.state.userRole}
                                         };
                                         this.props.updateUser(user)}}>
+
                                         {(this.props.currBrowsing.role === 'admin') && (!this.props.sameUser) ? 
                                                                         "Update Role" : "Save Changes"}</button>
                             </div>
