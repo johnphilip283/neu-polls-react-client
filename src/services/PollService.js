@@ -6,7 +6,7 @@ export const voteForPoll = async (pid, option) => {
         body: JSON.stringify(option),
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${window.localStorage.getItem('token')}`
+            'Authorization': `Bearer ${window.localStorage.getItem('token') || ''}`
         }
     }).then(res => res.json());
 }
@@ -16,7 +16,7 @@ export const getAnonPolls = async () => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${window.localStorage.getItem('token')}`
+            'Authorization': `Bearer ${window.localStorage.getItem('token') || ''}`
         }
     }).then(res => res.json());
 }
@@ -26,7 +26,7 @@ export const getAllPolls = async (showAuthors = false) => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${window.localStorage.getItem('token')}`
+            'Authorization': `Bearer ${window.localStorage.getItem('token') || ''}`
         }
     }).then(res => res.json());
 }
@@ -36,7 +36,7 @@ export const getVotesForPoll = async pid => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${window.localStorage.getItem('token')}`
+            'Authorization': `Bearer ${window.localStorage.getItem('token') || ''}`
         }
     }).then(res => res.json());
 }
@@ -46,7 +46,7 @@ export const findPollById = async pid => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${window.localStorage.getItem('token')}`
+            'Authorization': `Bearer ${window.localStorage.getItem('token') || ''}`
         }
     }).then(res => res.json());
 }
@@ -57,7 +57,7 @@ export const createPoll = async poll => {
         body: JSON.stringify(poll),
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${window.localStorage.getItem('token')}`
+            'Authorization': `Bearer ${window.localStorage.getItem('token') || ''}`
         }
     }).then(res => res.json());
 }
@@ -67,7 +67,7 @@ export const deletePoll = async pid => {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${window.localStorage.getItem('token')}`
+            'Authorization': `Bearer ${window.localStorage.getItem('token') || ''}`
         }
     }).then(res => res.json());
 }
@@ -78,7 +78,7 @@ export const updatePoll = async (pid, poll) => {
         body: JSON.stringify(poll),
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${window.localStorage.getItem('token')}`
+            'Authorization': `Bearer ${window.localStorage.getItem('token') || ''}`
         }
     }).then(res => res.json());
 }
