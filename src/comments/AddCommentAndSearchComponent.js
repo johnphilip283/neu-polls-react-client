@@ -13,7 +13,7 @@ const AddCommentAndSearchComponent = ({ pid, location, history }) => {
 
     const jwt = window.localStorage.getItem('token');
 
-    const searchResult = new URLSearchParams(location.search).get('query') || '';
+    const searchResult = new URLSearchParams(location.search).get('criteria') || '';
 
     const [userComment, setUserComment] = useState('');
     const [gifQuery, setGifQuery] = useState(searchResult);
