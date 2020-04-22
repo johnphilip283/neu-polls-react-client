@@ -7,8 +7,8 @@ import ProfileScreenComponent from './profile/ProfileScreenComponent';
 import PollDetailComponent from './poll/PollDetailComponent';
 import AddCommentAndSearchComponent from './comments/AddCommentAndSearchComponent';
 import PrivacyComponent from './privacy/PrivacyComponent';
-
 import ProfilePollCommentComponent from './profile/ProfilePollCommentComponent'
+import AboutComponent from './about/AboutComponent';
 
 const App = () => {
   return (
@@ -23,6 +23,7 @@ const App = () => {
       <Route exact path="/profile/:userId/comments" render={props => <ProfilePollCommentComponent userId={props.match.params.userId} type={'comment'}/>}></Route>
       <Route exact path="/details/:pid/search" render={props => <AddCommentAndSearchComponent pid={props.match.params.pid}/>}></Route>
       <Route exact path="/privacy" component={PrivacyComponent}></Route>
+      <Route exact path='/about' component={AboutComponent}></Route>
     </Router>
   );
 };
