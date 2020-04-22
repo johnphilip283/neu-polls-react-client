@@ -8,7 +8,7 @@ const HeadingComponent = ({ }) => {
   const logOut = () => window.localStorage.removeItem("token");
    
   return (
-    <nav className="navbar p-3 heading">
+    <nav className="navbar p-3 heading ">
       <span className="brand">NEU Polls</span>
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
