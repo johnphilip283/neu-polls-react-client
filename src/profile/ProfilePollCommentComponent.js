@@ -30,6 +30,7 @@ const ProfilePollCommentComponent = ({ userId, type }) => {
             const fetchData = async () => {
                 findUserPolls(window.localStorage.getItem('token'), userId, true, true)
                     .then(result => {
+
                         setUser(result);
                         
                         result.comments.map(c => 
@@ -57,7 +58,30 @@ const ProfilePollCommentComponent = ({ userId, type }) => {
 
     const votePolls = async (pid, vote) => {
         await voteForPoll(pid, vote);
-        setPolls(await getAllPolls(true));
+        if (type === 'poll') {
+            findUserPolls(window.localStorage.getItem('token'), userId)
+                .then(result => {
+                    const author = {'firstName': result.firstName, 'lastName': result.lastName, 'role': result.role}
+                    result.polls.map(p => p['author'] =  author)
+    
+                    setPolls(result.polls);
+                    setUser(result);
+                })
+        }
+
+        else if (type === 'comment') {
+            findUserPolls(window.localStorage.getItem('token'), userId, true, true)
+                .then(result => {
+                    setUser(result);
+                    const ids = [...new Set(result.comments.map(c => c.poll_id))]
+
+                    ids.map(c_id => {
+                        findPollById(c_id)
+                            .then(new_poll => setPolls(prevState => (prevState.map(p => (p.id === new_poll.id ? Object.assign(p, new_poll) : p)))))
+                    })
+            })
+        }
+
     }
 
     const list1 = polls.slice(0, polls.length / 3);
